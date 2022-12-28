@@ -1,0 +1,5 @@
+SAMPLE_SIZE=44
+SERIAL_PORT="/dev/cu.usbserial-0001"
+TXT_PATH="txtStorage"
+IMAGE_PATH="images"
+BAUD_RATE=9600
