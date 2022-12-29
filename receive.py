@@ -64,6 +64,9 @@ def mainLoop(serialInst):
                             count=0
                             writing=False
                             print(time.time()-startTime)
+                            
+                            print(TRASH_STRING)
+                            
                         count+=1
 serialInst=portSetup()            
 mainLoop(serialInst)

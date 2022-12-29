@@ -34,12 +34,20 @@ def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label):
                 cv2.imwrite(output_path,img_array)
 
 if __name__=='__main__':
-    if len(sys.argv)!=2:
-        print("NO LABEL ARGUMENT!!!")
+    if len(sys.argv)!=3:#test 0
+        print("MISSING ARGUMENT(S)!!!")
         print("QUITTED")
         quit()
-    else:
-        #print("the argument is ")
-        #print(sys.argv[1])
-        storeTxtToJpg(TXT_PATH,IMAGE_PATH,sys.argv[1])
+    if not (sys.argv[1]=='test' or sys.argv[1]=='train'):
+        print("NO SUCH MODE, PLEASE ENTER test or train as mode")
+        print("QUIT")
+        quit()
+        
     
+    #print("the argument is ")
+    #print(sys.argv[1])
+    if sys.argv[1]=='test':
+        path=TEST_IMAGE_PATH
+    elif sys.argv[1]=='train':
+        path=TRAIN_IMAGE_PATH
+    storeTxtToJpg(TXT_PATH,path,sys.argv[2])
