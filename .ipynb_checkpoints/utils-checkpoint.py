@@ -14,41 +14,15 @@ def removeTxt():
             os.remove(os.path.join(txt_dir, item))
 
 def report_data():
-    #output: 
-    """
-    train:
-    0: amount
-    1: amount
-    2: ...
-    .
-    .
-    .
-    9
-    
-    test:
-    0: amount
-    1: 
-    .
-    .
-    .
-    9
-    
-    
-    """
-    #TRAIN_IMAGE_PATH=os.path.join("images","train")
-    #TEST_IMAGE_PATH=os.path.join("images","test")
-    #list 
-    #train image
     train_folders=os.listdir(TRAIN_IMAGE_PATH)
     train_folders.sort()
     paths=[TRAIN_IMAGE_PATH,TEST_IMAGE_PATH]
-    for path in paths:
+    for path in paths:#paths=[...train, .../test]
         print(path)
-        for folder in train_folders:
-            #print(folder)
-            #isDirectory = os.path.isdir(fpath)
+        folder_list=os.listdir(path)
+        folder_list.sort()
+        for folder in folder_list:#
             if os.path.isdir(os.path.join(path,folder)):
-
                 folder_dir=os.path.join(path,folder)
                 num_of_files=len(os.listdir(folder_dir))
                 print(f"{folder}: {num_of_files}")
