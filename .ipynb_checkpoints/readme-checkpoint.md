@@ -25,5 +25,3 @@ Accuracy of 6: 100.0 %
 Accuracy of 7: 88.88888888888889 %
 Accuracy of 8: 75.0 %
 Accuracy of 9: 50.0 %
-
-TODO: add 250 more data to '3' and '5' 
