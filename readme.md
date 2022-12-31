@@ -27,3 +27,12 @@ Accuracy of 8: 75.0 %
 Accuracy of 9: 50.0 %
 
 TODO: add 250 more data to '3' and '5' 
+
+31/12
+Implement convNet2 which has following architecture
+Input (3*44*6)
+conv1: filter size:3*3 num filter=128 padding=1
+maxpooling (2*2)
+conv2: filter size: 3*3 num filter=56 
+maxpolling (2*1)
+fully connected layer 560=>256>128>10
