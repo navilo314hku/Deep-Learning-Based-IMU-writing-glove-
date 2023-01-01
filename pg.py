@@ -52,7 +52,7 @@ train_dataset= torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform)
 test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
-def train(model,num_epochs=500,learning_rate=0.001):
+def train(model,num_epochs=250,learning_rate=0.0005):
     print(f"lr={learning_rate}")
     loss_arr=[]
     criterion = nn.CrossEntropyLoss()

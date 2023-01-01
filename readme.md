@@ -25,8 +25,7 @@ Accuracy of 6: 100.0 %
 Accuracy of 7: 88.88888888888889 %
 Accuracy of 8: 75.0 %
 Accuracy of 9: 50.0 %
-
-TODO: add 250 more data to '3' and '5' 
+ 
 
 31/12
 Implement convNet2 which has following architecture
@@ -36,3 +35,11 @@ maxpooling (2*2)
 conv2: filter size: 3*3 num filter=56 
 maxpolling (2*1)
 fully connected layer 560=>256>128>10
+
+1/1
+Complete data collection, each class having around 300 training data
+Trained ConvNet2 achieving 80% test accuracy lmao, however, further training has lead to overfitting
+
+TODO: write convNet2 Model which is customize for different input image size by checking the tensor shape 
+TODO: applying randomCrop with height<44 and width=6
+
