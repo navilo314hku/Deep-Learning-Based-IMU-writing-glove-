@@ -40,6 +40,17 @@ fully connected layer 560=>256>128>10
 Complete data collection, each class having around 300 training data
 Trained ConvNet2 achieving 80% test accuracy lmao, however, further training has lead to overfitting
 
-TODO: write convNet2 Model which is customize for different input image size by checking the tensor shape 
+
 TODO: applying randomCrop with height<44 and width=6
 
+2/1:
+complete convNetFlexible which is flexible with different input dimension
+
+applied randomcrops(30,6) and then resize it back to (44,6), it clearly reduced the problem of overfitting, while the testing accuracy is lowered. 
+Might consider enlarge the network
+test/train accuracy: 45-50%
+
+TODO: test for random crop with larger network 
+1. more conv filter (256,128) instead of (128,64)
+2. one more conv layer => (256,128,64)
+3. reverse number of conv layer (64,128,256)

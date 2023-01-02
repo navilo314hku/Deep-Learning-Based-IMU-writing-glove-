@@ -4,20 +4,20 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
-from model_classes.convNet import ConvNet
+from model_classes.convNet import *
 from torchvision.models import resnet18
-
+import matplotlib.pyplot as plt
+from datetime import datetime
 #import torchvision.datasets.ImageFolder 
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from test import report_accuracies
 from const import *
 # Device configuration
+save=False
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 batch_size=4
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5), (0.5))])
 
 import os
 import pandas as pd
@@ -47,48 +47,75 @@ class CustomImageDataset(Dataset):
         if self.target_transform:
             label = self.target_transform(label)
         return image, label
-train_dataset= torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform)
-test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
-test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
 
-
-def train(model,num_epochs=100,learning_rate=0.001):
-
+def train(model,num_epochs=500,learning_rate=0.00001):
+#    MODEL_CHECKPOINT
+    print(f"lr={learning_rate}")
+    loss_arr=[]
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
-        
+    
     n_total_steps = len(train_loader)
-    for epoch in range(num_epochs):
-        for i, (images, labels) in enumerate(train_loader):
-            # origin shape: [4, 3, 32, 32] = 4, 3, 1024
-            # input_layer: 3 input channels, 6 output channels, 5 kernel size
-            images = images.to(device)
-            labels = labels.to(device)
+    with open(LOSS_LOG_PATH, 'a') as f:
+        f.writelines(f"{model.model_name}_ep{num_epochs}\n")
+        f.writelines(f"training time:\n")
+        f.writelines(datetime.now().strftime("%Y%m%d_%H%M%S"))
+        f.write('\n')
+        for epoch in range(num_epochs):
+            for i, (images, labels) in enumerate(train_loader):
+                # origin shape: [4, 3, 32, 32] = 4, 3, 1024
+                # input_layer: 3 input channels, 6 output channels, 5 kernel size
+                images = images.to(device)
+                labels = labels.to(device)
 
-            # Forward pass
-            outputs = model(images)
-            loss = criterion(outputs, labels)
+                # Forward pass
+                outputs = model(images)
+                loss = criterion(outputs, labels)
 
-            # Backward and optimize
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+                # Backward and optimize
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                loss_arr.append(loss)
+                if (i+1) % 200 == 0:
+                    print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
+            if epoch% int(num_epochs/3)==0 and save:
+                print("saving model checkpoint")
+                savePath=f"{model.model_name}_ep{epoch}.pth"
+                savePath=os.path.join(MODEL_CHECKPOINT,savePath)
+                torch.save(model.state_dict(),savePath)
+                
+            f.writelines(f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}\n')
 
-            if (i+1) % 200 == 0:
-                print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
+        #plt.scatter(np.linspace(1, num_epochs, num_epochs).astype(int),loss_arr)
+        #plt.show()
+        print('Finished Training')
+        f.write("Finished Training")
+        PATH = './cnn.pth'
+        torch.save(model.state_dict(), PATH)
+    report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
+#Load model and train
+def train_from_load(model_object,modelPath,num_epochs,learning_rate):
+    
+   
+    #MODEL_PATH=os.path.join("trained_models","1_1_convNet2_ep=250_lr_0001.pth")
+    model.load_state_dict(torch.load(modelPath,map_location=torch.device(device)),strict=False)
+    model.eval()
+    train(model,num_epochs=num_epochs,learning_rate=learning_rate)
 
-    print('Finished Training')
-    PATH = './cnn.pth'
-    torch.save(model.state_dict(), PATH)
-#Train from scratch
-output_size=10
-print(device)
-num_epochs = 1000
-learning_rate = 0.001
-model = ConvNet(output_size=output_size).to(device)
-model= resnet18().to(device)
-model.eval()
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
-train(model)
+if __name__=='__main__':
+    transform = transforms.Compose(
+    [transforms.ToTensor(),
+    transforms.RandomCrop((30,6)),
+    transforms.Resize((44,6)),
+    
+     transforms.Normalize((0.5), (0.5))])
+
+    train_dataset= torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform)
+    test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
+    model = ConvNet3(output_size=len(train_dataset.classes))
+    train(model,200,0.001)
+    #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
+    #train_from_load(model,"cnn.pth",200,0.001)
