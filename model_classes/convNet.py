@@ -22,12 +22,6 @@ class ConvNetFlexible(nn.Module):
         self.conv2 = nn.Conv2d(128, 56, 3)
         self.pool2 = nn.MaxPool2d((2,1),(2,1))
 
-
-        #self.fc1 = nn.Linear(560,256)
-        #self.fc2 = nn.Linear(256, 128)
-        #self.fc3 = nn.Linear(128, output_size)
-        
-
     def forward(self, x):
         # -> n, 3, 32, 32
         x = self.pool1(F.relu(self.conv1(x)))  # -> n, 6, 14, 14
@@ -53,8 +47,6 @@ class ConvNet3(nn.Module):
         self.pool1 = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(128, 56, 3)
         self.pool2 = nn.MaxPool2d((2,1),(2,1))
-
-
         self.fc1 = nn.Linear(504,256)
         self.fc2 = nn.Linear(256, 128)
         self.fc3 = nn.Linear(128, output_size)
@@ -77,8 +69,6 @@ class ConvNet2(nn.Module):
         self.pool1 = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(128, 56, 3)
         self.pool2 = nn.MaxPool2d((2,1),(2,1))
-
-
         self.fc1 = nn.Linear(560,256)
         self.fc2 = nn.Linear(256, 128)
         self.fc3 = nn.Linear(128, output_size)
@@ -112,3 +102,45 @@ class ConvNet(nn.Module):
         x = F.relu(self.fc2(x))               # -> n, 84
         x = self.fc3(x)                       # -> n, 10
         return x
+class ConvNet4(nn.Module):
+    def __init__(self,output_size):
+        self.model_name="ConvNet4"
+        super(ConvNet4, self).__init__()
+        self.conv1 = nn.Conv2d(3, 128, (3,3),padding=1)
+        self.pool1 = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(128, 256, 3)
+        self.pool2 = nn.MaxPool2d((2,1),(2,1))
+        self.fc1 = nn.Linear(2560,256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, output_size)
+    def forward(self, x):
+        # -> n, 3, 32, 32
+        x = self.pool1(F.relu(self.conv1(x)))  # -> n, 6, 14, 14
+        x = self.pool2(F.relu(self.conv2(x)))  # -> n, 16, 5, 5
+        x = x.view(-1, 2560)            # -> n, 400
+        x = F.relu(self.fc1(x))               # -> n, 120
+        x = F.relu(self.fc2(x))               # -> n, 84
+        x = self.fc3(x)                       # -> n, 10
+        return x
+class ThreeLayerConvNet1(nn.Module):
+    def __init__(self,output_size):
+        self.model_name="ConvNet4"
+        super(ThreeLayerConvNet1, self).__init__()
+        self.conv1 = nn.Conv2d(3, 128, (3,3),padding=1)
+        self.pool1 = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(128, 256, 3)
+        self.pool2 = nn.MaxPool2d((2,1),(2,1))
+        
+        self.fc1 = nn.Linear(2560,256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, output_size)
+    def forward(self, x):
+        # -> n, 3, 32, 32
+        x = self.pool1(F.relu(self.conv1(x)))  # -> n, 6, 14, 14
+        x = self.pool2(F.relu(self.conv2(x)))  # -> n, 16, 5, 5
+        x = x.view(-1, 2560)            # -> n, 400
+        x = F.relu(self.fc1(x))               # -> n, 120
+        x = F.relu(self.fc2(x))               # -> n, 84
+        x = self.fc3(x)                       # -> n, 10
+        return x
+#class ThreeLayerConvNet1(nn.Module):

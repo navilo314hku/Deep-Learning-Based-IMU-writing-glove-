@@ -12,6 +12,8 @@ def removeTxt():
     for item in txtFileList:
         if item.endswith(".txt"):
             os.remove(os.path.join(txt_dir, item))
+def get_datetime():
+    return datetime.now().strftime("%Y%m%d_%H%M%S")
 
 def report_data():
     train_folders=os.listdir(TRAIN_IMAGE_PATH)

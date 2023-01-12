@@ -5,6 +5,7 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
 from model_classes.convNet import *
+from model_classes.DNN import *
 from torchvision.models import resnet18
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -14,6 +15,8 @@ import numpy as np
 import os
 from test import report_accuracies
 from const import *
+from utils import *
+
 # Device configuration
 save=False
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -91,7 +94,9 @@ def train(model,num_epochs=500,learning_rate=0.00001):
         #plt.show()
         print('Finished Training')
         f.write("Finished Training")
-        PATH = './cnn.pth'
+        training_name=model.model_name+"_"+get_datetime()
+        PATH=os.path.join(TRAINED_MODELS_PATH,training_name)
+        #PATH = './cnn.pth'
         torch.save(model.state_dict(), PATH)
     report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
 #Load model and train
@@ -104,6 +109,7 @@ def train_from_load(model_object,modelPath,num_epochs,learning_rate):
     train(model,num_epochs=num_epochs,learning_rate=learning_rate)
 
 if __name__=='__main__':
+
     transform = transforms.Compose(
     [transforms.ToTensor(),
     transforms.RandomCrop((30,6)),
@@ -115,7 +121,8 @@ if __name__=='__main__':
     test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
-    model = ConvNet3(output_size=len(train_dataset.classes))
-    train(model,200,0.001)
+    #model = ConvNet4(output_size=len(train_dataset.classes))
+    model=DNN()
+    train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     #train_from_load(model,"cnn.pth",200,0.001)

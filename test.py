@@ -73,14 +73,10 @@ def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
     report(trainloader,'train',ACC_LOG_PATH)
 
 if __name__=='__main__':
-    model = ConvNet2(output_size=10)
-    MODEL_PATH=os.path.join("trained_models","1_1_convNet2_ep=250_lr_0001.pth")
-    #MODEL_PATH="cnn.pth"
-    model.load_state_dict(torch.load(MODEL_PATH,map_location=torch.device('cpu')))
-    model.eval()
-
-
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = ConvNet2(output_size=10)
+    model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
+    model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
     transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Normalize((0.5), (0.5))])
