@@ -20,7 +20,6 @@ from utils import *
 # Device configuration
 save=False
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-batch_size=4
 
 import os
 import pandas as pd
@@ -115,19 +114,10 @@ def train_previous(model_object,num_epochs,learning_rate):
 
 if __name__=='__main__':
     print(device)
-    transform = transforms.Compose(
-    [transforms.ToTensor(),
-    transforms.RandomCrop((30,6)),
-    transforms.Resize((44,6)),
     
-     transforms.Normalize((0.5), (0.5))])
+    train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
 
-    train_dataset= torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform)
-    test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
-    #model = ConvNet4(output_size=len(train_dataset.classes))
-    model=DNN()
+    model=OptimConvNet2(output_size=10)
     train_previous(model,100,0.001)
     #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")

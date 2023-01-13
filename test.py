@@ -4,7 +4,10 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
-from model_classes.convNet import ConvNet,ConvNet2
+from model_classes.convNet import *
+from customFunctions import *
+from utils import *
+
 #import torchvision.datasets.ImageFolder 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -63,22 +66,17 @@ def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
                     print(f'Accuracy of {classes[i]}: {acc} %')
                     f.writelines(f'Accuracy of {classes[i]}: {acc} %\n')
                     
-    test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform)
-    testloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
-    train_dataset = torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform)
-    trainloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
+
     print("Test accuracy")
-    report(testloader,'test',ACC_LOG_PATH)
+    report(test_loader,'test',ACC_LOG_PATH)
     print("Train accuracy")
-    report(trainloader,'train',ACC_LOG_PATH)
+    report(train_loader,'train',ACC_LOG_PATH)
 
 if __name__=='__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = ConvNet2(output_size=10)
-    model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
+    train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
+    model = OptimConvNet2(output_size=10)
+    #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
+    model_path='./cnn.pth'
     model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
-    transform = transforms.Compose(
-        [transforms.ToTensor(),
-        transforms.Normalize((0.5), (0.5))])
-
     report_accuracies(model)

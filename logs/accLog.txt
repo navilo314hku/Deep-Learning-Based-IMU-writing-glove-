@@ -42,3 +42,146 @@ Accuracy of 6: 68.38487972508591 %
 Accuracy of 7: 1.36986301369863 %
 Accuracy of 8: 29.41176470588235 %
 Accuracy of 9: 58.644067796610166 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Train Accuracy of the network: 76.89690370874447 %
+Accuracy of 0: 94.09836065573771 %
+Accuracy of 1: 81.88153310104529 %
+Accuracy of 2: 55.87188612099644 %
+Accuracy of 3: 64.09395973154362 %
+Accuracy of 4: 76.38888888888889 %
+Accuracy of 5: 54.69255663430421 %
+Accuracy of 6: 84.87972508591065 %
+Accuracy of 7: 78.08219178082192 %
+Accuracy of 8: 88.58131487889273 %
+Accuracy of 9: 90.54054054054055 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Train Accuracy of the network: 76.89690370874447 %
+Accuracy of 0: 94.09836065573771 %
+Accuracy of 1: 81.66089965397924 %
+Accuracy of 2: 55.714285714285715 %
+Accuracy of 3: 64.42953020134229 %
+Accuracy of 4: 76.38888888888889 %
+Accuracy of 5: 54.69255663430421 %
+Accuracy of 6: 84.87972508591065 %
+Accuracy of 7: 78.08219178082192 %
+Accuracy of 8: 88.58131487889273 %
+Accuracy of 9: 90.84745762711864 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Train Accuracy of the network: 76.89690370874447 %
+Accuracy of 0: 94.07894736842105 %
+Accuracy of 1: 81.94444444444444 %
+Accuracy of 2: 55.87188612099644 %
+Accuracy of 3: 64.21404682274247 %
+Accuracy of 4: 76.30662020905923 %
+Accuracy of 5: 54.69255663430421 %
+Accuracy of 6: 84.87972508591065 %
+Accuracy of 7: 78.08219178082192 %
+Accuracy of 8: 88.58131487889273 %
+Accuracy of 9: 90.54054054054055 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Train Accuracy of the network: 76.89690370874447 %
+Accuracy of 0: 94.05940594059406 %
+Accuracy of 1: 81.66089965397924 %
+Accuracy of 2: 55.87188612099644 %
+Accuracy of 3: 64.21404682274247 %
+Accuracy of 4: 76.38888888888889 %
+Accuracy of 5: 54.69255663430421 %
+Accuracy of 6: 84.87972508591065 %
+Accuracy of 7: 78.08219178082192 %
+Accuracy of 8: 88.54166666666667 %
+Accuracy of 9: 90.54054054054055 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 100.0 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 37.5 %
+Accuracy of 4: 75.0 %
+Accuracy of 5: 62.5 %
+Accuracy of 6: 88.88888888888889 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 75.0 %
+Accuracy of 9: 75.0 %
+Train Accuracy of the network: 76.89690370874447 %
+Accuracy of 0: 94.07894736842105 %
+Accuracy of 1: 81.66089965397924 %
+Accuracy of 2: 55.87188612099644 %
+Accuracy of 3: 64.21404682274247 %
+Accuracy of 4: 76.30662020905923 %
+Accuracy of 5: 54.69255663430421 %
+Accuracy of 6: 84.87972508591065 %
+Accuracy of 7: 78.08219178082192 %
+Accuracy of 8: 88.54166666666667 %
+Accuracy of 9: 90.54054054054055 %
+Test Accuracy of the network: 79.76190476190476 %
+Accuracy of 0: 87.5 %
+Accuracy of 1: 100.0 %
+Accuracy of 2: 100.0 %
+Accuracy of 3: 50.0 %
+Accuracy of 4: 87.5 %
+Accuracy of 5: 37.5 %
+Accuracy of 6: 100.0 %
+Accuracy of 7: 77.77777777777777 %
+Accuracy of 8: 87.5 %
+Accuracy of 9: 62.5 %
+Train Accuracy of the network: 88.87376658727459 %
+Accuracy of 0: 93.3993399339934 %
+Accuracy of 1: 85.81314878892734 %
+Accuracy of 2: 77.14285714285714 %
+Accuracy of 3: 83.94648829431438 %
+Accuracy of 4: 92.01388888888889 %
+Accuracy of 5: 87.37864077669903 %
+Accuracy of 6: 93.12714776632302 %
+Accuracy of 7: 86.3013698630137 %
+Accuracy of 8: 96.19377162629758 %
+Accuracy of 9: 92.9054054054054 %
