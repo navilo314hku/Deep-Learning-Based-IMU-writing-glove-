@@ -82,11 +82,11 @@ def train(model,num_epochs=500,learning_rate=0.00001):
                 loss_arr.append(loss)
                 if (i+1) % 200 == 0:
                     print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
-            if epoch% int(num_epochs/3)==0 and save:
+            if epoch% int(num_epochs/10)==0 and save:
                 print("saving model checkpoint")
                 savePath=f"{model.model_name}_ep{epoch}.pth"
                 savePath=os.path.join(MODEL_CHECKPOINT,savePath)
-                torch.save(model.state_dict(),savePath)
+                torch.save(model.state_dict(),'./cnn.pth')
                 
             f.writelines(f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}\n')
 
@@ -96,8 +96,8 @@ def train(model,num_epochs=500,learning_rate=0.00001):
         f.write("Finished Training")
         training_name=model.model_name+"_"+get_datetime()
         PATH=os.path.join(TRAINED_MODELS_PATH,training_name)
-        #PATH = './cnn.pth'
         torch.save(model.state_dict(), PATH)
+        torch.save(model.state_dict(), './cnn.pth')
     report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
 #Load model and train
 def train_from_load(model_object,modelPath,num_epochs,learning_rate):
@@ -108,8 +108,13 @@ def train_from_load(model_object,modelPath,num_epochs,learning_rate):
     model.eval()
     train(model,num_epochs=num_epochs,learning_rate=learning_rate)
 
-if __name__=='__main__':
+def train_previous(model_object,num_epochs,learning_rate):
+    model.load_state_dict(torch.load('./cnn.pth',map_location=torch.device(device)),strict=False)
+    model.eval()
+    train(model,num_epochs=num_epochs,learning_rate=learning_rate)
 
+if __name__=='__main__':
+    print(device)
     transform = transforms.Compose(
     [transforms.ToTensor(),
     transforms.RandomCrop((30,6)),
@@ -123,6 +128,7 @@ if __name__=='__main__':
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
     #model = ConvNet4(output_size=len(train_dataset.classes))
     model=DNN()
-    train(model,300,0.001)
+    train_previous(model,100,0.001)
+    #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     #train_from_load(model,"cnn.pth",200,0.001)
