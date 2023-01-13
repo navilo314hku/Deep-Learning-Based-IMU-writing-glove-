@@ -2071,4 +2071,6 @@ Epoch [97/100], Step [735/735], Loss: 1.7979
 Epoch [98/100], Step [735/735], Loss: 2.6585
 Epoch [99/100], Step [735/735], Loss: 2.0300
 Epoch [100/100], Step [735/735], Loss: 1.6991
-Finished Training
+Finished TrainingConvNet2_ep300
+training time:
+20230113_134536
