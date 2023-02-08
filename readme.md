@@ -48,7 +48,7 @@ Complete data collection, each class having around 300 training data
 Trained ConvNet2 achieving 80% test accuracy lmao, however, further training has lead to overfitting
 
 
-TODO: applying randomCrop with height<44 and width=6
+applying randomCrop with height<44 and width=6
 
 2/1:
 complete convNetFlexible which is flexible with different input dimension
@@ -58,10 +58,17 @@ Might consider enlarge the network
 test/train accuracy: 45-50%
 
 30/1:
-TODO: Investigate how to run RNN model with varied image height
+Investigate how to run RNN model with varied image height
 
 8/2: 
+TODO: Refine IMU callibration system: 
+if the user is not writing, do callibration continuously. 
+
+TODO: ReCollect training and testing data after refinement of callibration system, move old data to backup file: others/backup/old_CNN_data
+
+TODO: Retrain CNN for the new data 
 TODO: 
 test with the new receive system, with the 2nd click being the stop writing indicator. 
 
 TODO: separate the data for varied length and 44*6 fixed length data
+

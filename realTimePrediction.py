@@ -35,7 +35,7 @@ def isSave(txt):
     return 0
 #main receive loop
 
-def realTimePredict(serialInst):
+def FixedLengthData_RealTimePredict(serialInst):
     #local const
     realTimePredictionDir=realTimePrediction.ROOT_PATH
     txt_file_name=os.path.join(realTimePredictionDir,"0.txt")
@@ -70,15 +70,10 @@ def realTimePredict(serialInst):
                             count=0
                             writing=False
                             print(time.time()-startTime)
-                            
                             print(TRASH_STRING)
                             #convert txt to image
                             #Problem with storeTxtToJpg
                             storeTxtToJpg(realTimePredictionDir,realTimePredictionDir,label="",mode="prediction")
-                            # model_path=os.path.join(Models.TRAINED_MODELS_PATH,"ConvNet2_randCrop_ep=500.pth")
-                            # model=ConvNet2(10)
-                            # model.load_state_dict(torch.load(model_path))
-                            # predictSingleImage(image_file_name,model=model)
                             model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
                             model=OptimConvNet2(output_size=10)
                             model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
@@ -90,5 +85,6 @@ def realTimePredict(serialInst):
                             
                             sleep(2)
                         count+=1
-serialInst=portSetup()            
-realTimePredict(serialInst)
+if __name__=="__main__":     
+    serialInst=portSetup()            
+    FixedLengthData_RealTimePredict(serialInst)

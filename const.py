@@ -4,19 +4,29 @@ from customFunctions import *
 import torch
 
 
-
+#Data Collection/Transmission Var
 SAMPLE_SIZE=44
 SERIAL_PORT="/dev/cu.usbserial-0001"
-TXT_PATH="txtStorage"
-TXT_BUFFER="txtBuffer"
-TRAIN_IMAGE_PATH=os.path.join("images","train")
-TEST_IMAGE_PATH=os.path.join("images","test")
 MODEL_CHECKPOINT="checkpoint"
 BAUD_RATE=9600
+#Data Collection/Transmission Var end
+
+#Training Log var
 LOG_PATH="logs"
 ACC_LOG_PATH=os.path.join(LOG_PATH,"accLog.txt")
 LOSS_LOG_PATH=os.path.join(LOG_PATH,"lossLog.txt")
+#Training Log var end 
 
+#Data storage var
+TXT_PATH="txtStorage"
+TXT_BUFFER="txtBuffer"
+FIXED_DATA_PATH=os.path.join("images","fixedLengthData")
+VARIED_DATA_PATH=os.path.join("images","variedLengthData")
+TRAIN_IMAGE_PATH=os.path.join(FIXED_DATA_PATH,"train")
+TEST_IMAGE_PATH=os.path.join(FIXED_DATA_PATH,"test")
+VARIED_LENGTH_TRAIN_PATH=os.path.join(VARIED_DATA_PATH,"train")
+VARIED_LENGTH_TEST_PATH=os.path.join(VARIED_DATA_PATH,"test")
+#Data storage var end
 batch_size=4
 class realTimePrediction:
     ROOT_PATH="realTimePrediction"

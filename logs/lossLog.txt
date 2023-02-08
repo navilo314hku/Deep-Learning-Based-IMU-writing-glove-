@@ -298,3 +298,6 @@ Epoch [50/50], Step [735/735], Loss: 2.2808
 Finished TrainingRNN_LSTM_ep50
 training time:
 20230202_125740
+RNN_LSTM_ep50
+training time:
+20230208_171029
