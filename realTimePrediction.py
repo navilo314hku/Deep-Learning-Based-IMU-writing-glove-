@@ -2,10 +2,10 @@
 # 1. receiving data from USB by pyserial
 # 2. Normalize the data between 0 and 1 
 # 3. Store the data in image/ directory in .jpg format
-REMOVE=True
 PRINT_DATA=True
-
-
+from models.model_classes.convNet import *
+from txtToJpg import *
+from test import * 
 from const import * 
 from utils import removeTxt
 from time import sleep
@@ -35,23 +35,27 @@ def isSave(txt):
     return 0
 #main receive loop
 
-def FixedTimeDataCollection(serialInst):
-    if (REMOVE):
-        removeTxt()
-
+def realTimePredict(serialInst):
+    #local const
+    realTimePredictionDir=realTimePrediction.ROOT_PATH
+    txt_file_name=os.path.join(realTimePredictionDir,"0.txt")
+    image_file_name=os.path.join(realTimePredictionDir,"0.jpg")
+    #local variable
     count=1
     txtIndx=0
     writing=False
+    
+    #os.remove(txt_file_name)
+    #os.remove(image_file_name)
     while True: 
         #print("running")
         if serialInst.in_waiting:
             packet=serialInst.readline()
             txt=(packet.decode('ISO-8859-1'))
             if PRINT_DATA:
-                print(float(txt[0]))
                 print(txt)
-            file_name=os.path.join(TXT_PATH,f"{txtIndx}.txt")
-            with open(file_name, 'a') as f:
+           
+            with open(txt_file_name, 'a') as f:
                 if isStart(txt) and not (writing):
                     writing=True
                     startTime=time.time()
@@ -59,48 +63,32 @@ def FixedTimeDataCollection(serialInst):
                 if writing==True:
                     #print("writing True")
                     if  isStart(txt)==0 and isSave(txt)==0:#IMU data
-                        if count<=SAMPLE_SIZE:
+                        if count<=SAMPLE_SIZE+1:
                             f.write(txt)
-                        if count==SAMPLE_SIZE:
+                        if count==SAMPLE_SIZE+1:
                             txtIndx+=1
                             count=0
                             writing=False
                             print(time.time()-startTime)
                             
                             print(TRASH_STRING)
-                        count+=1
-def VariedTimeDataCollection(serialInst):
-    if (REMOVE):
-        removeTxt()
-
-    count=1
-    txtIndx=0
-    writing=False
-    while True: 
-        #print("running")
-        if serialInst.in_waiting:
-            packet=serialInst.readline()
-            txt=(packet.decode('ISO-8859-1'))
-            if PRINT_DATA:
-                print(float(txt[0]))
-                print(txt)
-            file_name=os.path.join(TXT_PATH,f"{txtIndx}.txt")
-            with open(file_name, 'a') as f:
-                if isStart(txt) and not (writing):
-                    count=0
-                    writing=True
-                    startTime=time.time()
-                    print("Writing started")
-                elif isStart(txt) and (writing):
-                    print(f"Writing Stopped, number of lines written: {count}")
-                    print(TRASH_STRING)
-                    writing=False
-                    txtIndx+=1
-                    print(time.time()-startTime)
-                if writing: 
-                    #print("writing True")
-                    if  isStart(txt)==0 and isSave(txt)==0:#check if the data is IMU data
-                        f.write(txt) 
+                            #convert txt to image
+                            #Problem with storeTxtToJpg
+                            storeTxtToJpg(realTimePredictionDir,realTimePredictionDir,label="",mode="prediction")
+                            # model_path=os.path.join(Models.TRAINED_MODELS_PATH,"ConvNet2_randCrop_ep=500.pth")
+                            # model=ConvNet2(10)
+                            # model.load_state_dict(torch.load(model_path))
+                            # predictSingleImage(image_file_name,model=model)
+                            model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
+                            model=OptimConvNet2(output_size=10)
+                            model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
+                            img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
+                            print(predictSingleImage(img_path,model=model))
+                            #prediction on the image
+                            #remove 0.txt
+                            os.remove(txt_file_name)
+                            
+                            sleep(2)
                         count+=1
 serialInst=portSetup()            
-FixedTimeDataCollection(serialInst)
+realTimePredict(serialInst)

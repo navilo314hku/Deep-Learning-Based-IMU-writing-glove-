@@ -14,7 +14,13 @@ def removeTxt(txtBuffer):
             os.remove(os.path.join(txtBuffer, item))
 
 
-def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label):
+def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label,mode="dataCollection"):
+    """
+    TXT_PATH: folder name of the txt files
+    IMAGE_PATH: destinated image folder to save, DO NOT include filename like .jpg
+    mode: 'dataCollection' or 'prediction'
+    
+    """
     def arrayFromFile(file_name):
         arr=[]
         with open(file_name,'r') as f:
@@ -29,18 +35,41 @@ def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label):
         return datetime.now().strftime("%Y%m%d_%H%M%S")
     #convert all txt files from {TXT_PATH} into jpg images and store them in {IMAGE_PATH}
     #1. list all files name with txt extension
-    destination_folder= os.path.join(IMAGE_PATH,f"{label}")
-    for file in os.listdir(TXT_PATH):
-        if file.endswith(".txt"):
-            file_name=os.path.join(TXT_PATH,file)
-            if not isEmptyTxt(file_name): 
-                print(file_name)
-                img_array=arrayFromFile(file_name)
-                sleep(1)
-                #cv2.imwrite(img_)
-                #path=os.path.join("images","your_file.jpg")
-                output_path=os.path.join(destination_folder,currentTimeInfo()+".jpg")
-                cv2.imwrite(output_path,img_array)
+    if mode=="dataCollection":
+        destination_folder= os.path.join(IMAGE_PATH,f"{label}")
+        for file in os.listdir(TXT_PATH):
+            if file.endswith(".txt"):
+                file_name=os.path.join(TXT_PATH,file)
+                if not isEmptyTxt(file_name): 
+                    print(file_name)
+                    img_array=arrayFromFile(file_name)
+                    sleep(1)
+
+                    #cv2.imwrite(img_)
+                    #path=os.path.join("images","your_file.jpg")
+                    output_path=os.path.join(destination_folder,currentTimeInfo()+".jpg")
+                    print(f"output_path={output_path}")
+                    cv2.imwrite(output_path,img_array)
+                    #print("complete image writing")
+    elif mode=="prediction":
+        destination_folder= os.path.join(IMAGE_PATH,f"{label}")
+        for file in os.listdir(TXT_PATH):
+            if file.endswith(".txt"):
+                file_name=os.path.join(TXT_PATH,file)
+                if not isEmptyTxt(file_name): 
+                    print(file_name)
+                    img_array=arrayFromFile(file_name)
+                    sleep(1)
+
+                    #cv2.imwrite(img_)
+                    #path=os.path.join("images","your_file.jpg")
+                    output_path=os.path.join(destination_folder,"0.jpg")
+                    print(f"output_path={output_path}")
+                    cv2.imwrite(output_path,img_array)
+                    print("complete image writing") 
+    else: 
+        raise Exception("INVALID MODE IN storeTxtToJpg()")
+        quit()
 def moveToBuffer(FromPath,ToPath):
     print("moving files from txtStorage to txtBuffer")
     source = FromPath

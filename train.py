@@ -4,23 +4,24 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
-from model_classes.convNet import *
-from model_classes.DNN import *
 from torchvision.models import resnet18
 import matplotlib.pyplot as plt
 from datetime import datetime
 #import torchvision.datasets.ImageFolder 
-import matplotlib.pyplot as plt
 import numpy as np
 import os
-from test import report_accuracies
+#custom import
+from models.model_classes.convNet import *
+from models.model_classes.DNN import *
+from models.model_classes.RNN import *
 from const import *
+from test import report_accuracies
 from utils import *
+
 
 # Device configuration
 save=False
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 import os
 import pandas as pd
 from torchvision.io import read_image
@@ -114,11 +115,18 @@ def train_previous(model_object,num_epochs,learning_rate):
 
 if __name__=='__main__':
     print(device)
-    
+    input_size = 6
+    hidden_size = 256
+    num_layers = 2
+    num_classes = 10
+    sequence_length = 44
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
 
     model=OptimConvNet2(output_size=10)
-    train_previous(model,100,0.001)
+    #model=RNN()
+    model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
+
+    train_previous(model,50,0.001)
     #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     #train_from_load(model,"cnn.pth",200,0.001)

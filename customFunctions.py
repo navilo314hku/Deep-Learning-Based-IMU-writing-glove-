@@ -17,6 +17,6 @@ basicTransform = transforms.Compose(
 )
 randCropTransform = transforms.Compose(
     [transforms.ToTensor(),
-    transforms.RandomCrop((30,6)),
+    transforms.RandomCrop((40,6)),
     transforms.Resize((44,6)),
      transforms.Normalize((0.5), (0.5))])

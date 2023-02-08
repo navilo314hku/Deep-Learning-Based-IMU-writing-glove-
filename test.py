@@ -4,10 +4,10 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
-from model_classes.convNet import *
+from models.model_classes.convNet import *
+from models.model_classes.RNN import *
 from customFunctions import *
 from utils import *
-
 #import torchvision.datasets.ImageFolder 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,6 +17,25 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5), (0.5))])
+    
+def predictSingleImage(image_path,model):
+   img = Image.open(image_path)
+
+   
+   # get normalized image
+   img_normalized = transform(img).float()
+   #img_normalized = img_normalized.unsqueeze_(0)
+   # input = Variable(image_tensor)
+   img_normalized = img_normalized.to(device)
+   print(img_normalized.shape)
+
+   with torch.no_grad():
+      model.eval()  
+      output =model(img_normalized)
+     # print(output)
+      index = output.data.cpu().numpy().argmax()
+      class_name = index
+      return class_name
 
 def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
     def report(dataloader,mode,logFile=None):
@@ -73,10 +92,17 @@ def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
     report(train_loader,'train',ACC_LOG_PATH)
 
 if __name__=='__main__':
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    #DO NOT DELETE 
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
-    model = OptimConvNet2(output_size=10)
-    #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
-    model_path='./cnn.pth'
+
+    #DO NOT DELETE 
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
+    model=OptimConvNet2(output_size=10)
     model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
-    report_accuracies(model)
+    img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
+    print(predictSingleImage(img_path,model=model))
+    #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
+    #model_path='./cnn.pth'
+    #report_accuracies(model)

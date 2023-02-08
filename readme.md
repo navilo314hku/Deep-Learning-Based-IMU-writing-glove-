@@ -56,3 +56,12 @@ complete convNetFlexible which is flexible with different input dimension
 applied randomcrops(30,6) and then resize it back to (44,6), it clearly reduced the problem of overfitting, while the testing accuracy is lowered. 
 Might consider enlarge the network
 test/train accuracy: 45-50%
+
+30/1:
+TODO: Investigate how to run RNN model with varied image height
+
+8/2: 
+TODO: 
+test with the new receive system, with the 2nd click being the stop writing indicator. 
+
+TODO: separate the data for varied length and 44*6 fixed length data
