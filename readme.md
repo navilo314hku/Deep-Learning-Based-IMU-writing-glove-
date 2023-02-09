@@ -68,8 +68,7 @@ TODO: ReCollect training and testing data after refinement of callibration syste
 
 TODO: Retrain CNN for the new data 
 
-TODO: 
 test with the new receive system, with the 2nd click being the stop writing indicator. 
 
-TODO: separate the data for varied length and 44*6 fixed length data
+separate the data for varied length and 44*6 fixed length data
 

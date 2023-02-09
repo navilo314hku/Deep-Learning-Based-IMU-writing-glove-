@@ -6,7 +6,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
 from models.model_classes.convNet import *
 from models.model_classes.RNN import *
-from customFunctions import *
+from models.customFunctions import *
 from utils import *
 #import torchvision.datasets.ImageFolder 
 import matplotlib.pyplot as plt

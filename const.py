@@ -1,6 +1,6 @@
 import os
 import torchvision
-from customFunctions import *
+from models.customFunctions import *
 import torch
 
 CONF_JSON_PATH="conf.json"
