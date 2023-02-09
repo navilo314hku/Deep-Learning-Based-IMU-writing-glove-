@@ -3,7 +3,7 @@ import torchvision
 from customFunctions import *
 import torch
 
-
+CONF_JSON_PATH="conf.json"
 #Data Collection/Transmission Var
 SAMPLE_SIZE=44
 SERIAL_PORT="/dev/cu.usbserial-0001"

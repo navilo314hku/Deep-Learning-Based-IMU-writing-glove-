@@ -5,7 +5,39 @@ import numpy as np
 import cv2
 import os 
 from time import sleep
-from customFunctions import *
+from models.customFunctions import *
+import json
+import argparse
+def getReceivePyParserArgument():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t","--datatype",help="model datatype of receive: u for unfixed, f for fixed")
+    #parser.add_argument("--times",help="number of times you want to print the echo arg",type=int)
+    args = parser.parse_args()
+    if not args.datatype:
+        raise Exception("missing datatype: u/f")
+        quit()
+    
+    return args
+class ConfJsonDictAccesser():
+    class DataLengthType():
+        fix='f'
+        unfix='u'
+    def getDict(self):
+        with open(CONF_JSON_PATH, 'r') as openfile:
+        # Reading from json file
+            json_object = json.load(openfile)
+            return json_object
+    def writeDataLengthType(self,mode):
+        if mode!="f" and mode!="u":
+            raise Exception("no such mode in conf.json")
+            quit()
+        
+        JSON_dict={
+            "modelDataType":mode
+        }
+        JSON_obj=json.dumps(JSON_dict,indent=4)
+        with open(CONF_JSON_PATH,"w") as jsonFile:
+            jsonFile.write(JSON_obj)
 def removeTxt():
     import os
     txt_dir = os.path.join("/Users/ivanlo/Desktop/FYP/code/main/",TXT_PATH)

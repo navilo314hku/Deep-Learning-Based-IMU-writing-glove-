@@ -67,6 +67,7 @@ if the user is not writing, do callibration continuously.
 TODO: ReCollect training and testing data after refinement of callibration system, move old data to backup file: others/backup/old_CNN_data
 
 TODO: Retrain CNN for the new data 
+
 TODO: 
 test with the new receive system, with the 2nd click being the stop writing indicator. 
 

@@ -5,13 +5,14 @@
 REMOVE=True
 PRINT_DATA=True
 
-
+import json
 from const import * 
-from utils import removeTxt
+from utils import *
 from time import sleep
 import serial.tools.list_ports
 import time
 import os
+jsonWriter=ConfJsonDictAccesser()
 def portSetup():
     ports= serial.tools.list_ports.comports(0)
     serialInst=serial.Serial()
@@ -36,6 +37,7 @@ def isSave(txt):
 #main receive loop
 
 def FixedTimeDataCollection(serialInst):
+    jsonWriter.writeDataLengthType(mode="f")
     if (REMOVE):
         removeTxt()
 
@@ -48,7 +50,7 @@ def FixedTimeDataCollection(serialInst):
             packet=serialInst.readline()
             txt=(packet.decode('ISO-8859-1'))
             if PRINT_DATA:
-                print(float(txt[0]))
+                #print(float(txt[0]))
                 print(txt)
             file_name=os.path.join(TXT_PATH,f"{txtIndx}.txt")
             with open(file_name, 'a') as f:
@@ -70,6 +72,7 @@ def FixedTimeDataCollection(serialInst):
                             print(TRASH_STRING)
                         count+=1
 def VariedTimeDataCollection(serialInst):
+    jsonWriter.writeDataLengthType(mode="u")
     if (REMOVE):
         removeTxt()
 
@@ -82,7 +85,7 @@ def VariedTimeDataCollection(serialInst):
             packet=serialInst.readline()
             txt=(packet.decode('ISO-8859-1'))
             if PRINT_DATA:
-                print(float(txt[0]))
+                #print(float(txt[0]))
                 print(txt)
             file_name=os.path.join(TXT_PATH,f"{txtIndx}.txt")
             with open(file_name, 'a') as f:
@@ -102,5 +105,13 @@ def VariedTimeDataCollection(serialInst):
                     if  isStart(txt)==0 and isSave(txt)==0:#check if the data is IMU data
                         f.write(txt) 
                         count+=1
-serialInst=portSetup()            
-FixedTimeDataCollection(serialInst)
+if __name__=="__main__":
+    args=getReceivePyParserArgument()
+    serialInst=portSetup()  
+    if args.datatype=='f':#fixed data length
+        FixedTimeDataCollection(serialInst)
+    elif args.datatype=='u':#unfixed       
+        VariedTimeDataCollection(serialInst)
+    else: 
+        raise Exception("no such datatype, please enter u/f for unfixed/fixed datatype")
+        quit()

@@ -6,6 +6,7 @@ import cv2
 import os 
 from time import sleep
 from threading import *
+from utils import *
 def removeTxt(txtBuffer):
     import os
     txtFileList = os.listdir(txtBuffer)
@@ -85,8 +86,11 @@ def moveToBuffer(FromPath,ToPath):
         os.rename(src_path, dst_path)
 
 if __name__=='__main__':
+ 
     if len(sys.argv)!=3:#test 0
-        print("MISSING ARGUMENT(S)!!!")
+        raise Exception("""MISSING ARGUMENT(S)!!! 
+        python3 txtToJpg.py [train/test] [label]
+        """)
         print("QUITTED")
         quit()
     if not (sys.argv[1]=='test' or sys.argv[1]=='train'):
@@ -94,13 +98,21 @@ if __name__=='__main__':
         print("QUIT")
         quit()
         
-    
-    #print("the argument is ")
-    #print(sys.argv[1])
+    jsonAccesser=ConfJsonDictAccesser()
+    conf_json_dict=jsonAccesser.getDict()
+    modelDataType=conf_json_dict["modelDataType"]
+
     if sys.argv[1]=='test':
-        path=TEST_IMAGE_PATH
+        if modelDataType==jsonAccesser.DataLengthType.fix:
+            path=TEST_IMAGE_PATH
+        elif modelDataType==jsonAccesser.DataLengthType.unfix:
+            path=VARIED_LENGTH_TEST_PATH
     elif sys.argv[1]=='train':
-        path=TRAIN_IMAGE_PATH
+        if modelDataType==jsonAccesser.DataLengthType.fix:
+            path=TRAIN_IMAGE_PATH
+        elif modelDataType==jsonAccesser.DataLengthType.unfix:
+            path=VARIED_LENGTH_TRAIN_PATH
+
     moveToBuffer(TXT_PATH,TXT_BUFFER)
     storeTxtToJpg(TXT_BUFFER,path,sys.argv[2])
     removeTxt(TXT_BUFFER)
