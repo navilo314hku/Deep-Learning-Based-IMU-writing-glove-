@@ -33,27 +33,60 @@ learning_rate = 0.005
 #num_epochs = 3
 
 # Recurrent neural network (many-to-one)
+# class baseRNN(torch.nn.Module):
+class baseRNN(torch.nn.Module):
+    def __init__(self,hidden_size,num_layers,num_classes):
+        super(baseRNN,self).__init__()
+        self.model_name="RNN_base_model"
+        self.hidden_size=hidden_size
+        self.num_layers = num_layers
+        self.num_classes=num_classes
+class RNN_test(baseRNN):
+    def __init__(self, input_size, hidden_size, num_layers, num_classes):
+        super().__init__(hidden_size,num_layers,num_classes)
+        self.model_name="RNN_test"
+        self.rnn=nn.RNN(input_size,hidden_size,num_layers,num_layers,batch_first=True,bidirectional=False)
+    def forward(self, x):
+        fc=nn.Linear(self.hidden_size*x.size(2),self.num_classes)
+        # Set initial hidden and cell states
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
+        print(f"x.size():{x.size()}")
+        x=x.reshape(x.size(0),x.size(2),x.size(3))
+
+        print(f"reshaped x: {x.size()}")
+        # Forward propagate LSTM
+        out, _ = self.rnn(x, h0)
+        out = out.reshape(out.shape[0], -1)
+
+        # Decode the hidden state of the last time step
+        out = fc(out)
+        return out       
+
+
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
         super(RNN, self).__init__()
         self.model_name="RNN"
         self.hidden_size = hidden_size
         self.num_layers = num_layers
+        self.num_classes=num_classes
         self.rnn = nn.RNN(input_size, hidden_size, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_size * sequence_length, num_classes)
+        #self.fc = nn.Linear(hidden_size * sequence_length, num_classes)
 
     def forward(self, x):
+        fc=nn.Linear(self.hidden_size*x.size(2),self.num_classes)
         # Set initial hidden and cell states
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
-        #print(f"x.size():{x.size()}")
+        print(f"x.size():{x.size()}")
         x=x.reshape(x.size(0),x.size(2),x.size(3))
-        #print(f"reshaped x: {x.size()}")
+
+        print(f"reshaped x: {x.size()}")
         # Forward propagate LSTM
         out, _ = self.rnn(x, h0)
         out = out.reshape(out.shape[0], -1)
 
         # Decode the hidden state of the last time step
-        out = self.fc(out)
+        out = fc(out)
         return out
 
 
@@ -69,6 +102,8 @@ class RNN_GRU(nn.Module):
 
     def forward(self, x):
         # Set initial hidden and cell states
+        fc=nn.Linear(self.hidden_size*x.size(2),self.num_classes)
+
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
         x=x.reshape(x.size(0),x.size(2),x.size(3))
         # Forward propagate LSTM
@@ -76,7 +111,7 @@ class RNN_GRU(nn.Module):
         out = out.reshape(out.shape[0], -1)
 
         # Decode the hidden state of the last time step
-        out = self.fc(out)
+        out = fc(out)
         return out
 
 
@@ -88,10 +123,12 @@ class RNN_LSTM(nn.Module):
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_size * sequence_length, num_classes)
+        #self.fc = nn.Linear(hidden_size * sequence_length, num_classes)
 
     def forward(self, x):
         # Set initial hidden and cell states
+        fc=nn.Linear(self.hidden_size*x.size(2),self.num_classes)
+
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
 
@@ -103,7 +140,7 @@ class RNN_LSTM(nn.Module):
         out = out.reshape(out.shape[0], -1)
 
         # Decode the hidden state of the last time step
-        out = self.fc(out)
+        out = fc(out)
         return out
 
 

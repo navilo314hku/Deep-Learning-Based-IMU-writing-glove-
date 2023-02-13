@@ -60,11 +60,10 @@ test/train accuracy: 45-50%
 30/1:
 Investigate how to run RNN model with varied image height
 
-8/2: 
-TODO: Refine IMU callibration system: 
-if the user is not writing, do callibration continuously. 
+# 8/2: 
+TODO: Start click of start_button to start calibration process.
 
-TODO: ReCollect training and testing data after refinement of callibration system, move old data to backup file: others/backup/old_CNN_data
+TODO: ReCollect training and testing data after refinement of callibration system
 
 TODO: Retrain CNN for the new data 
 

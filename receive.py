@@ -108,9 +108,9 @@ def VariedTimeDataCollection(serialInst):
 if __name__=="__main__":
     args=getReceivePyParserArgument()
     serialInst=portSetup()  
-    if args.datatype=='f':#fixed data length
+    if args.type=='f':#fixed data length
         FixedTimeDataCollection(serialInst)
-    elif args.datatype=='u':#unfixed       
+    elif args.type=='u':#unfixed       
         VariedTimeDataCollection(serialInst)
     else: 
         raise Exception("no such datatype, please enter u/f for unfixed/fixed datatype")

@@ -10,7 +10,7 @@ import json
 import argparse
 def getReceivePyParserArgument():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t","--datatype",help="model datatype of receive: u for unfixed, f for fixed")
+    parser.add_argument("-t","--type",help="model datatype of receive: u for unfixed, f for fixed")
     #parser.add_argument("--times",help="number of times you want to print the echo arg",type=int)
     args = parser.parse_args()
     if not args.datatype:
@@ -78,4 +78,6 @@ def showImg0_255(img_dir):
     
 if __name__=="__main__":
     #report_data()
-    showImg0_255("")
+    #showImg0_255("")
+    train_ds,test_dataset,_,_=getDatasetDataloader()
+    print(test_dataset.classes)

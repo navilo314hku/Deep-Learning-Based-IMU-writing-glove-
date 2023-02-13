@@ -118,14 +118,14 @@ if __name__=='__main__':
     input_size = 6
     hidden_size = 256
     num_layers = 2
-    num_classes = 10
-    sequence_length = 44
+    #sequence_length = 44
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
-
-    model=OptimConvNet2(output_size=10)
+    num_classes = len(train_dataset.classes)
+    
+    #model=OptimConvNet2(output_size=num_classes)
     #model=RNN()
-    model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
-
+    model = RNN_test(input_size, hidden_size, num_layers, num_classes).to(device)
+    #model = RNN2(n_input=input_size,n_output=num_classes,n_hidden=20)
     train_previous(model,50,0.001)
     #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")

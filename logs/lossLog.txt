@@ -301,3 +301,51 @@ training time:
 RNN_LSTM_ep50
 training time:
 20230208_171029
+RNN_LSTM_ep50
+training time:
+20230210_100551
+RNN2_ep50
+training time:
+20230210_132213
+RNN2_ep50
+training time:
+20230210_132233
+RNN2_ep50
+training time:
+20230210_132312
+RNN2_ep50
+training time:
+20230210_132531
+RNN2_ep50
+training time:
+20230210_132650
+RNN2_ep50
+training time:
+20230210_132800
+RNN_ep50
+training time:
+20230210_133432
+RNN_ep50
+training time:
+20230210_133616
+RNN_ep50
+training time:
+20230210_133653
+RNN_ep50
+training time:
+20230210_133721
+RNN_LSTM_ep50
+training time:
+20230210_133959
+RNN_test_ep50
+training time:
+20230210_153032
+RNN_test_ep50
+training time:
+20230210_153148
+RNN_ep50
+training time:
+20230210_153303
+RNN_test_ep50
+training time:
+20230210_153746
