@@ -77,10 +77,10 @@ class RNN(nn.Module):
         fc=nn.Linear(self.hidden_size*x.size(2),self.num_classes)
         # Set initial hidden and cell states
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
-        print(f"x.size():{x.size()}")
+        #print(f"x.size():{x.size()}")
         x=x.reshape(x.size(0),x.size(2),x.size(3))
 
-        print(f"reshaped x: {x.size()}")
+        #print(f"reshaped x: {x.size()}")
         # Forward propagate LSTM
         out, _ = self.rnn(x, h0)
         out = out.reshape(out.shape[0], -1)

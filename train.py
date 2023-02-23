@@ -80,7 +80,7 @@ def train(model,num_epochs=500,learning_rate=0.00001):
                 loss.backward()
                 optimizer.step()
                 loss_arr.append(loss)
-                if (i+1) % 200 == 0:
+                if (i+1) % 2 == 0:
                     print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
             if epoch% int(num_epochs/10)==0 and save:
                 print("saving model checkpoint")
@@ -96,7 +96,7 @@ def train(model,num_epochs=500,learning_rate=0.00001):
         f.write("Finished Training")
         training_name=model.model_name+"_"+get_datetime()
         PATH=os.path.join(TRAINED_MODELS_PATH,training_name)
-        torch.save(model.state_dict(), PATH)
+        #torch.save(model.state_dict(), PATH)
         torch.save(model.state_dict(), './cnn.pth')
     report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
 #Load model and train
@@ -121,12 +121,14 @@ if __name__=='__main__':
     #sequence_length = 44
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
     num_classes = len(train_dataset.classes)
+    print(f"number of classes: {num_classes}")
     
-    #model=OptimConvNet2(output_size=num_classes)
-    #model=RNN()
-    model = RNN_test(input_size, hidden_size, num_layers, num_classes).to(device)
+    model=OptimConvNet2(output_size=num_classes)
+    #model=RNN(input_size,hidden_size,num_layers,num_classes)
+    #model = RNN_test(input_size, hidden_size, num_layers, num_classes).to(device)
+    
     #model = RNN2(n_input=input_size,n_output=num_classes,n_hidden=20)
-    train_previous(model,50,0.001)
+    train(model,200,0.0001)
     #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     #train_from_load(model,"cnn.pth",200,0.001)

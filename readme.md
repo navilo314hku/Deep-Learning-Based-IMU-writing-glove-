@@ -60,14 +60,11 @@ test/train accuracy: 45-50%
 30/1:
 Investigate how to run RNN model with varied image height
 
-# 8/2: 
+8/2: 
 TODO: Start click of start_button to start calibration process.
 
-TODO: ReCollect training and testing data after refinement of callibration system
+TODO: TEST RNN model for varied length input data 
 
-TODO: Retrain CNN for the new data 
-
-test with the new receive system, with the 2nd click being the stop writing indicator. 
-
-separate the data for varied length and 44*6 fixed length data
-
+TODO: Investigate OCR model
+    1. What is it actually 
+    2. How to fit it into our motion data

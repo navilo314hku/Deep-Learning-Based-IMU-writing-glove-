@@ -99,7 +99,7 @@ if __name__=='__main__':
         quit()
         
     jsonAccesser=ConfJsonDictAccesser()
-    conf_json_dict=jsonAccesser.getDict()
+    conf_json_dict=jsonAccesser.get_dict()
     modelDataType=conf_json_dict["modelDataType"]
 
     if sys.argv[1]=='test':

@@ -39,12 +39,14 @@ def predictSingleImage(image_path,model):
 
 def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
     def report(dataloader,mode,logFile=None):
-        classes=[0,1,2,3,4,5,6,7,8,9]
+        #classes=[0,1,2,3,4,5,6,7,8,9]
+        classes=[0,1,2]
+        num_classes=len(classes)
         with torch.no_grad():
             n_correct = 0
             n_samples = 0
-            n_class_correct = [0 for i in range(10)]
-            n_class_samples = [0 for i in range(10)]
+            n_class_correct = [0 for i in range(num_classes)]
+            n_class_samples = [0 for i in range(num_classes)]
             for images, labels in dataloader:
                 images = images.to(device)
                 labels = labels.to(device)
@@ -80,7 +82,7 @@ def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
                 else: 
 
                     raise Exception('Invalid mode')
-                for i in range(10):
+                for i in range(num_classes):
                     acc = 100.0 * n_class_correct[i] / n_class_samples[i]
                     print(f'Accuracy of {classes[i]}: {acc} %')
                     f.writelines(f'Accuracy of {classes[i]}: {acc} %\n')
@@ -96,13 +98,19 @@ if __name__=='__main__':
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
 
     #DO NOT DELETE 
-
+    input_size = 6
+    hidden_size = 256
+    num_layers = 2
+    num_classes=3
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
-    model=OptimConvNet2(output_size=10)
+    model_path="cnn.pth"
+    model=OptimConvNet2(output_size=num_classes)
+    #model=RNN(input_size,hidden_size,num_layers,num_classes)
+
     model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
-    img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
-    print(predictSingleImage(img_path,model=model))
+    #img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
+    #print(predictSingleImage(img_path,model=model))
     #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
     #model_path='./cnn.pth'
-    #report_accuracies(model)
+    report_accuracies(model)
