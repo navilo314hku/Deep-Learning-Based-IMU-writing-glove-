@@ -5,7 +5,7 @@ import torch
 
 CONF_JSON_PATH="conf.json"
 #Data Collection/Transmission Var
-SAMPLE_SIZE=44
+SAMPLE_SIZE=22
 SERIAL_PORT="/dev/cu.usbserial-0001"
 MODEL_CHECKPOINT="checkpoint"
 BAUD_RATE=9600
@@ -22,12 +22,12 @@ TXT_PATH="txtStorage"
 TXT_BUFFER="txtBuffer"
 FIXED_DATA_PATH=os.path.join("images","fixedLengthData")
 VARIED_DATA_PATH=os.path.join("images","variedLengthData")
-TRAIN_IMAGE_PATH=os.path.join(FIXED_DATA_PATH,"train")
-TEST_IMAGE_PATH=os.path.join(FIXED_DATA_PATH,"test")
+FIXED_LENGTH_TRAIN_PATH=os.path.join(FIXED_DATA_PATH,"train")
+FIXED_LENGTH_TEST_PATH=os.path.join(FIXED_DATA_PATH,"test")
 VARIED_LENGTH_TRAIN_PATH=os.path.join(VARIED_DATA_PATH,"train")
 VARIED_LENGTH_TEST_PATH=os.path.join(VARIED_DATA_PATH,"test")
 #Data storage var end
-batch_size=4
+batch_size=1
 class realTimePrediction:
     ROOT_PATH="realTimePrediction"
 class Models:

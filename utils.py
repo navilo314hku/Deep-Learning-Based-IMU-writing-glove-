@@ -44,6 +44,7 @@ class ConfJsonDictAccesser():
         with open(CONF_JSON_PATH,"w") as jsonFile:
             jsonFile.write(JSON_obj)
 def removeTxt():
+    
     import os
     txt_dir = os.path.join("/Users/ivanlo/Desktop/FYP/code/main/",TXT_PATH)
     txtFileList = os.listdir(txt_dir)
@@ -53,9 +54,16 @@ def removeTxt():
 def get_datetime():
     return datetime.now().strftime("%Y%m%d_%H%M%S")
 def report_data():
-    train_folders=os.listdir(VARIED_LENGTH_TRAIN_PATH)
-    train_folders.sort()
-    paths=[VARIED_LENGTH_TRAIN_PATH,VARIED_LENGTH_TEST_PATH]
+    JsonAc=ConfJsonDictAccesser()
+    paths=''
+    if (JsonAc.get_model_data_type()=='f'):
+        
+        paths=[FIXED_LENGTH_TRAIN_PATH,FIXED_LENGTH_TEST_PATH]
+    elif (JsonAc.get_model_data_type()=='u'):
+        paths=[VARIED_LENGTH_TRAIN_PATH,VARIED_LENGTH_TEST_PATH]
+    else:
+        raise Exception("unknown data_type")
+        quit()
     for path in paths:#paths=[...train, .../test]
         print(path)
         folder_list=os.listdir(path)
@@ -70,18 +78,22 @@ def getDatasetDataloader():
     JsonAc=ConfJsonDictAccesser()
     ModelDataType=JsonAc.get_model_data_type()
     if ModelDataType=='f':
-        train_dataset=torchvision.datasets.ImageFolder(TRAIN_IMAGE_PATH,transform=basicTransform,loader=custom_pil_loader)
-        test_dataset= torchvision.datasets.ImageFolder(TEST_IMAGE_PATH,transform=basicTransform,loader=custom_pil_loader)
+        train_dataset=torchvision.datasets.ImageFolder(FIXED_LENGTH_TRAIN_PATH,transform=basicTransform,loader=custom_pil_loader)
+        test_dataset= torchvision.datasets.ImageFolder(FIXED_LENGTH_TEST_PATH,transform=basicTransform,loader=custom_pil_loader)
     elif ModelDataType=='u':
-        train_dataset=torchvision.datasets.ImageFolder(VARIED_LENGTH_TRAIN_PATH,transform=basicTransform,loader=custom_pil_loader)
-        test_dataset= torchvision.datasets.ImageFolder(VARIED_LENGTH_TEST_PATH,transform=basicTransform,loader=custom_pil_loader)
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True)
+        train_dataset=torchvision.datasets.ImageFolder(VARIED_LENGTH_TRAIN_PATH,transform=basicTransform)#,loader=custom_pil_loader)
+        test_dataset= torchvision.datasets.ImageFolder(VARIED_LENGTH_TEST_PATH,transform=basicTransform)#,loader=custom_pil_loader)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
+    print("dataset information: ")
+    print(f"batch_size={batch_size}")
+    print(f"train_dataset shape: {train_dataset[0][0].shape}")
+    
     return train_dataset,test_dataset,train_loader,test_loader
 
 def showImg0_255(img_dir):
-    print(TEST_IMAGE_PATH)
-    path=os.path.join(TEST_IMAGE_PATH,"1","20230102_014555.jpg")
+    print(FIXED_LENGTH_TEST_PATH)
+    path=os.path.join(FIXED_LENGTH_TEST_PATH,"1","20230102_014555.jpg")
     print(path) 
     arr=image.imread(path)
     print(type(arr))

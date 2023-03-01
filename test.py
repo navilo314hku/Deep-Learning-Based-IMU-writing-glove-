@@ -4,6 +4,8 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import TensorDataset, DataLoader,Dataset
+from torchvision.models import resnet18
+
 from models.model_classes.convNet import *
 from models.model_classes.RNN import *
 from models.customFunctions import *
@@ -14,9 +16,9 @@ import numpy as np
 import os
 from const import *
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5), (0.5))])
+# transform = transforms.Compose(
+#     [transforms.ToTensor(),
+#      transforms.Normalize((0.5), (0.5))])
     
 def predictSingleImage(image_path,model):
    img = Image.open(image_path)
@@ -37,7 +39,7 @@ def predictSingleImage(image_path,model):
       class_name = index
       return class_name
 
-def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
+def report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH):
     def report(dataloader,mode,logFile=None):
         #classes=[0,1,2,3,4,5,6,7,8,9]
         classes=[0,1,2]
@@ -56,7 +58,7 @@ def report_accuracies(model,batch_size=4,logFile=ACC_LOG_PATH):
                 _, predicted = torch.max(outputs, 1)
                 n_samples += labels.size(0)
                 n_correct += (predicted == labels).sum().item()
-
+                #print(f"batch_size={batch_size}")
                 for i in range(batch_size):
                     contin=0
                     for j in range(1,batch_size):
@@ -103,12 +105,14 @@ if __name__=='__main__':
     num_layers = 2
     num_classes=3
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
+    #model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
     model_path="cnn.pth"
-    model=OptimConvNet2(output_size=num_classes)
+    #model=ConvNetFlexible(output_size=num_classes)
+    model=resnet18()
     #model=RNN(input_size,hidden_size,num_layers,num_classes)
 
-    model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')),strict=False)
+    model.eval()
     #img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
     #print(predictSingleImage(img_path,model=model))
     #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")

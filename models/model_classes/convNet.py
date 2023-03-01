@@ -17,7 +17,7 @@ class ConvNetFlexible(nn.Module):
         super(ConvNetFlexible, self).__init__()
         self.model_name="ConvNetFlex"
         self.output_size=output_size
-        self.conv1 = nn.Conv2d(3, 128, (3,3),padding=1,stride=(2,1))
+        self.conv1 = nn.Conv2d(1, 128, (3,3),padding=1,stride=(2,1))
         self.pool1 = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(128, 56, 3)
         self.pool2 = nn.MaxPool2d((2,1),(2,1))

@@ -20,7 +20,7 @@ from utils import *
 
 
 # Device configuration
-save=False
+save=True
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 import os
 import pandas as pd
@@ -60,7 +60,7 @@ def train(model,num_epochs=500,learning_rate=0.00001):
     
     n_total_steps = len(train_loader)
     with open(LOSS_LOG_PATH, 'a') as f:
-        f.writelines(f"{model.model_name}_ep{num_epochs}\n")
+        #f.writelines(f"{model.model_name}_ep{num_epochs}\n")
         f.writelines(f"training time:\n")
         f.writelines(datetime.now().strftime("%Y%m%d_%H%M%S"))
         f.write('\n')
@@ -84,11 +84,11 @@ def train(model,num_epochs=500,learning_rate=0.00001):
                     print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
             if epoch% int(num_epochs/10)==0 and save:
                 print("saving model checkpoint")
-                savePath=f"{model.model_name}_ep{epoch}.pth"
-                savePath=os.path.join(MODEL_CHECKPOINT,savePath)
+                #savePath=f"{model.model_name}_ep{epoch}.pth"
+                #savePath=os.path.join(MODEL_CHECKPOINT,savePath)
                 torch.save(model.state_dict(),'./cnn.pth')
                 
-            f.writelines(f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}\n')
+                f.writelines(f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}\n')
 
         #plt.scatter(np.linspace(1, num_epochs, num_epochs).astype(int),loss_arr)
         #plt.show()
@@ -98,7 +98,7 @@ def train(model,num_epochs=500,learning_rate=0.00001):
         PATH=os.path.join(TRAINED_MODELS_PATH,training_name)
         #torch.save(model.state_dict(), PATH)
         torch.save(model.state_dict(), './cnn.pth')
-    report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
+    #report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
 #Load model and train
 def train_from_load(model_object,modelPath,num_epochs,learning_rate):
     
@@ -122,13 +122,15 @@ if __name__=='__main__':
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
     num_classes = len(train_dataset.classes)
     print(f"number of classes: {num_classes}")
-    
-    model=OptimConvNet2(output_size=num_classes)
+    #model=ConvNetFlexible(output_size=num_classes)
+    #model=OptimConvNet2(output_size=num_classes)
     #model=RNN(input_size,hidden_size,num_layers,num_classes)
-    #model = RNN_test(input_size, hidden_size, num_layers, num_classes).to(device)
-    
+    #model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
+    model=resnet18()
     #model = RNN2(n_input=input_size,n_output=num_classes,n_hidden=20)
-    train(model,200,0.0001)
+    #train(model,200,0.001)
     #train(model,300,0.001)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
-    #train_from_load(model,"cnn.pth",200,0.001)
+    print(model.eval())
+    train_from_load(model,"cnn.pth",15,0.0005)
+    #train(model,100,0.001)

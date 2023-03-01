@@ -61,9 +61,7 @@ test/train accuracy: 45-50%
 Investigate how to run RNN model with varied image height
 
 8/2: 
-TODO: Start click of start_button to start calibration process.
 
-TODO: TEST RNN model for varied length input data 
 
 TODO: Investigate OCR model
     1. What is it actually 

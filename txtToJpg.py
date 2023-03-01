@@ -7,6 +7,7 @@ import os
 from time import sleep
 from threading import *
 from utils import *
+
 def removeTxt(txtBuffer):
     import os
     txtFileList = os.listdir(txtBuffer)
@@ -24,12 +25,17 @@ def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label,mode="dataCollection"):
     """
     def arrayFromFile(file_name):
         arr=[]
-        with open(file_name,'r') as f:
-            for line in f.readlines(): #line is a string
-                line_arr=[float(x) for x in line.split(",")]
-                arr.append(line_arr)
-        arr=np.array(arr)
-        return arr
+        status=-1
+        try:
+            with open(file_name,'r') as f:
+                for line in f.readlines(): #line is a string
+                    line_arr=[float(x) for x in line.split(",")]
+                    arr.append(line_arr)
+            arr=np.array(arr)
+            status=True
+        except:
+            status=False
+        return arr, status
     def isEmptyTxt(file_name):
         return os.stat(f"{file_name}").st_size == 0
     def currentTimeInfo():
@@ -43,7 +49,11 @@ def storeTxtToJpg(TXT_PATH,IMAGE_PATH,label,mode="dataCollection"):
                 file_name=os.path.join(TXT_PATH,file)
                 if not isEmptyTxt(file_name): 
                     print(file_name)
-                    img_array=arrayFromFile(file_name)
+                    img_array,result=arrayFromFile(file_name)
+                    if (result==False or result==-1):
+                        continue
+                    if (result==-1):
+                        raise Exception("error occur in arrayFromFile()")
                     sleep(1)
 
                     #cv2.imwrite(img_)
@@ -104,12 +114,12 @@ if __name__=='__main__':
 
     if sys.argv[1]=='test':
         if modelDataType==jsonAccesser.DataLengthType.fix:
-            path=TEST_IMAGE_PATH
+            path=FIXED_LENGTH_TEST_PATH
         elif modelDataType==jsonAccesser.DataLengthType.unfix:
             path=VARIED_LENGTH_TEST_PATH
     elif sys.argv[1]=='train':
         if modelDataType==jsonAccesser.DataLengthType.fix:
-            path=TRAIN_IMAGE_PATH
+            path=FIXED_LENGTH_TRAIN_PATH
         elif modelDataType==jsonAccesser.DataLengthType.unfix:
             path=VARIED_LENGTH_TRAIN_PATH
 

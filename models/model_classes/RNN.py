@@ -29,7 +29,6 @@ num_layers = 3
 num_classes = 10
 sequence_length = 44
 learning_rate = 0.005
-#batch_size = 64
 #num_epochs = 3
 
 # Recurrent neural network (many-to-one)
@@ -119,6 +118,7 @@ class RNN_GRU(nn.Module):
 class RNN_LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
         super(RNN_LSTM, self).__init__()
+        self.num_classes=num_classes
         self.model_name="RNN_LSTM"
         self.hidden_size = hidden_size
         self.num_layers = num_layers
