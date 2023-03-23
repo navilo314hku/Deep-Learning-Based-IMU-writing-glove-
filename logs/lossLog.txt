@@ -125,4 +125,133 @@ Epoch [12/15], Step [897/897], Loss: 0.5319
 Epoch [13/15], Step [897/897], Loss: 0.9933
 Epoch [14/15], Step [897/897], Loss: 0.6811
 Epoch [15/15], Step [897/897], Loss: 0.4691
+Finished Trainingtraining time:
+20230322_120549
+training time:
+20230322_121027
+training time:
+20230322_121155
+training time:
+20230322_121257
+Epoch [1/200], Step [397/397], Loss: 1.0596
+Epoch [21/200], Step [397/397], Loss: 1.1033
+Epoch [41/200], Step [397/397], Loss: 1.1377
+Epoch [61/200], Step [397/397], Loss: 1.0718
+Epoch [81/200], Step [397/397], Loss: 1.1073
+Epoch [101/200], Step [397/397], Loss: 1.0579
+Epoch [121/200], Step [397/397], Loss: 1.1128
+Epoch [141/200], Step [397/397], Loss: 1.1490
+Epoch [161/200], Step [397/397], Loss: 1.1115
+Epoch [181/200], Step [397/397], Loss: 1.1593
+Finished Trainingtraining time:
+20230322_122410
+Epoch [1/15], Step [397/397], Loss: 1.1262
+Epoch [2/15], Step [397/397], Loss: 1.0955
+Epoch [3/15], Step [397/397], Loss: 1.1013
+Epoch [4/15], Step [397/397], Loss: 1.0822
+Epoch [5/15], Step [397/397], Loss: 1.0691
+Epoch [6/15], Step [397/397], Loss: 1.1804
+Epoch [7/15], Step [397/397], Loss: 1.1153
+Epoch [8/15], Step [397/397], Loss: 1.1321
+Epoch [9/15], Step [397/397], Loss: 1.0834
+Epoch [10/15], Step [397/397], Loss: 1.0855
+Epoch [11/15], Step [397/397], Loss: 1.0437
+Epoch [12/15], Step [397/397], Loss: 1.1370
+Epoch [13/15], Step [397/397], Loss: 1.1289
+Epoch [14/15], Step [397/397], Loss: 1.1072
+Epoch [15/15], Step [397/397], Loss: 1.0543
+Finished Trainingtraining time:
+20230322_122436
+Epoch [1/200], Step [397/397], Loss: 1.0872
+Epoch [21/200], Step [397/397], Loss: 1.1147
+Epoch [41/200], Step [397/397], Loss: 1.0920
+Epoch [61/200], Step [397/397], Loss: 1.1765
+Epoch [81/200], Step [397/397], Loss: 1.0841
+Epoch [101/200], Step [397/397], Loss: 1.0099
+Epoch [121/200], Step [397/397], Loss: 1.1341
+Epoch [141/200], Step [397/397], Loss: 1.1498
+Epoch [161/200], Step [397/397], Loss: 1.0933
+Epoch [181/200], Step [397/397], Loss: 1.0640
+Finished Trainingtraining time:
+20230322_122929
+Epoch [1/200], Step [397/397], Loss: 1.1518
+Epoch [21/200], Step [397/397], Loss: 1.0762
+Epoch [41/200], Step [397/397], Loss: 1.0925
+Epoch [61/200], Step [397/397], Loss: 1.0975
+Epoch [81/200], Step [397/397], Loss: 1.1326
+Epoch [101/200], Step [397/397], Loss: 1.1144
+Epoch [121/200], Step [397/397], Loss: 1.1809
+Epoch [141/200], Step [397/397], Loss: 1.1162
+Epoch [161/200], Step [397/397], Loss: 1.1454
+Epoch [181/200], Step [397/397], Loss: 1.0561
+Finished Trainingtraining time:
+20230322_124325
+training time:
+20230322_124650
+Finished Trainingtraining time:
+20230322_125144
+Finished Trainingtraining time:
+20230322_130025
+training time:
+20230322_130048
+Finished Trainingtraining time:
+20230322_134241
+training time:
+20230322_134254
+Finished Trainingtraining time:
+20230322_135809
+Finished Trainingtraining time:
+20230322_140148
+Finished Trainingtraining time:
+20230322_140652
+Finished Trainingtraining time:
+20230322_140728
+Finished Trainingtraining time:
+20230322_140907
+Finished Trainingtraining time:
+20230322_141201
+Finished Trainingtraining time:
+20230322_141801
+training time:
+20230322_142020
+Finished Trainingtraining time:
+20230322_200253
+Finished Trainingtraining time:
+20230322_200335
+Finished Trainingtraining time:
+20230322_205118
+Finished Trainingtraining time:
+20230322_205338
+Finished Trainingtraining time:
+20230322_205512
+Finished Trainingtraining time:
+20230322_210126
+training time:
+20230322_210219
+training time:
+20230322_210520
+training time:
+20230322_210705
+training time:
+20230322_210739
+Finished Trainingtraining time:
+20230322_210853
+Finished Trainingtraining time:
+20230323_002224
+training time:
+20230323_002300
+Finished Trainingtraining time:
+20230323_003200
+Finished Trainingtraining time:
+20230323_163007
+training time:
+20230323_163035
+training time:
+20230323_163051
+Finished Trainingtraining time:
+20230323_214933
+training time:
+20230323_214947
+Finished Trainingtraining time:
+20230323_224902
 Finished Training

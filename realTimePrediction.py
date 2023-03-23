@@ -74,8 +74,9 @@ def FixedLengthData_RealTimePredict(serialInst):
                             #convert txt to image
                             #Problem with storeTxtToJpg
                             storeTxtToJpg(realTimePredictionDir,realTimePredictionDir,label="",mode="prediction")
-                            model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
-                            model=OptimConvNet2(output_size=10)
+                            #model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
+                            model_path="./cnn"
+                            model=OptimConvNet2(output_size=3)
                             model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
                             img_path=os.path.join(realTimePrediction.ROOT_PATH,"0.jpg")
                             print(predictSingleImage(img_path,model=model))

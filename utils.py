@@ -74,6 +74,7 @@ def report_data():
                 num_of_files=len(os.listdir(folder_dir))
                 print(f"{folder}: {num_of_files}")
 def getDatasetDataloader():
+    print("preparing dataset...........................")
     #get the conf json 
     JsonAc=ConfJsonDictAccesser()
     ModelDataType=JsonAc.get_model_data_type()
@@ -81,8 +82,8 @@ def getDatasetDataloader():
         train_dataset=torchvision.datasets.ImageFolder(FIXED_LENGTH_TRAIN_PATH,transform=basicTransform,loader=custom_pil_loader)
         test_dataset= torchvision.datasets.ImageFolder(FIXED_LENGTH_TEST_PATH,transform=basicTransform,loader=custom_pil_loader)
     elif ModelDataType=='u':
-        train_dataset=torchvision.datasets.ImageFolder(VARIED_LENGTH_TRAIN_PATH,transform=basicTransform)#,loader=custom_pil_loader)
-        test_dataset= torchvision.datasets.ImageFolder(VARIED_LENGTH_TEST_PATH,transform=basicTransform)#,loader=custom_pil_loader)
+        train_dataset=torchvision.datasets.ImageFolder(VARIED_LENGTH_TRAIN_PATH,transform=basicTransform,loader=custom_pil_loader)
+        test_dataset= torchvision.datasets.ImageFolder(VARIED_LENGTH_TEST_PATH,transform=basicTransform,loader=custom_pil_loader)
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
     print("dataset information: ")
@@ -92,13 +93,34 @@ def getDatasetDataloader():
     return train_dataset,test_dataset,train_loader,test_loader
 
 def showImg0_255(img_dir):
-    print(FIXED_LENGTH_TEST_PATH)
-    path=os.path.join(FIXED_LENGTH_TEST_PATH,"1","20230102_014555.jpg")
-    print(path) 
-    arr=image.imread(path)
-    print(type(arr))
-    new_arr = ((arr - arr.min()) * (1/(arr.max() - arr.min()) * 255)).astype('uint8')
-    cv2.imwrite("1.jpg",new_arr)
+    #print(FIXED_LENGTH_TEST_PATH)
+    image_path_dict={0:"20221228_191608.jpg",
+                      1:"20230102_014555.jpg",
+                      2:"20221228_191744.jpg",
+                      3:"20221228_191837.jpg",
+                      4:"20221228_191928.jpg",
+                      5:"20221228_192020.jpg",
+                      6:"20221228_192105.jpg",
+                      7:"20221228_192209.jpg",
+                      8:"20221228_192309.jpg",
+                      9:"20221228_192401.jpg"
+                    
+    }
+    storePath=os.path.join("images","sampleImages")
+    for index in image_path_dict:
+        path=os.path.join(BACKUP_PATH,"test",str(index),image_path_dict[index])
+        arr=image.imread(path)
+        new_arr = ((arr - arr.min()) * (1/(arr.max() - arr.min()) * 255)).astype('uint8')
+        file_name=f"{index}.jpg"
+        file_name=os.path.join(storePath,file_name)
+        cv2.imwrite(file_name,new_arr)
+        print(path)
+    #path=os.path.join(BACKUP_PATH,"test","1","20230102_014555.jpg")
+    #print(path) 
+    # arr=image.imread(path)
+    # print(type(arr))
+    # new_arr = ((arr - arr.min()) * (1/(arr.max() - arr.min()) * 255)).astype('uint8')
+    # cv2.imwrite("1.jpg",new_arr)
     
 if __name__=="__main__":
     report_data()

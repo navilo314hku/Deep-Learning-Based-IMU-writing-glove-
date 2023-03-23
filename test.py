@@ -39,10 +39,10 @@ def predictSingleImage(image_path,model):
       class_name = index
       return class_name
 
-def report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH):
+def report_accuracies(model,train_loader,test_loader, batch_size=batch_size,logFile=ACC_LOG_PATH):
     def report(dataloader,mode,logFile=None):
-        #classes=[0,1,2,3,4,5,6,7,8,9]
-        classes=[0,1,2]
+        classes=[0,1,2,3,4,5,6,7,8,9]
+        #classes=[0,1,2]
         num_classes=len(classes)
         with torch.no_grad():
             n_correct = 0
@@ -107,8 +107,8 @@ if __name__=='__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     #model_path=os.path.join(Models.TRAINED_MODELS_PATH,"OptimConvNet2_20230113_151355")
     model_path="cnn.pth"
-    #model=ConvNetFlexible(output_size=num_classes)
-    model=resnet18()
+    model=OptimConvNet2(output_size=num_classes)
+    #model=resnet18()
     #model=RNN(input_size,hidden_size,num_layers,num_classes)
 
     model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')),strict=False)
@@ -117,4 +117,4 @@ if __name__=='__main__':
     #print(predictSingleImage(img_path,model=model))
     #model_path=os.path.join("trained_models","ConvNet2_randCrop_ep=500.pth")
     #model_path='./cnn.pth'
-    report_accuracies(model)
+    report_accuracies(model,train_loader,test_loader)

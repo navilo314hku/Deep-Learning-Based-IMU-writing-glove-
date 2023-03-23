@@ -20,7 +20,7 @@ from utils import *
 
 
 # Device configuration
-save=True
+save=0
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 import os
 import pandas as pd
@@ -56,8 +56,9 @@ def train(model,num_epochs=500,learning_rate=0.00001):
     print(f"lr={learning_rate}")
     loss_arr=[]
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
-    
+    #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
     n_total_steps = len(train_loader)
     with open(LOSS_LOG_PATH, 'a') as f:
         #f.writelines(f"{model.model_name}_ep{num_epochs}\n")
@@ -98,7 +99,7 @@ def train(model,num_epochs=500,learning_rate=0.00001):
         PATH=os.path.join(TRAINED_MODELS_PATH,training_name)
         #torch.save(model.state_dict(), PATH)
         torch.save(model.state_dict(), './cnn.pth')
-    #report_accuracies(model,batch_size=batch_size,logFile=ACC_LOG_PATH)
+    report_accuracies(model,train_loader,test_loader,batch_size=batch_size,logFile=ACC_LOG_PATH)
 #Load model and train
 def train_from_load(model_object,modelPath,num_epochs,learning_rate):
     
@@ -115,22 +116,25 @@ def train_previous(model_object,num_epochs,learning_rate):
 
 if __name__=='__main__':
     print(device)
-    input_size = 6
-    hidden_size = 256
-    num_layers = 2
+    # input_size = 6
+    # hidden_size = 256
+    # num_layers = 2
     #sequence_length = 44
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
     num_classes = len(train_dataset.classes)
     print(f"number of classes: {num_classes}")
+    
     #model=ConvNetFlexible(output_size=num_classes)
-    #model=OptimConvNet2(output_size=num_classes)
+    model=OptimConvNet2(output_size=num_classes)
+    print(f"using model: {model.model_name}")
+    #model=DNN()
     #model=RNN(input_size,hidden_size,num_layers,num_classes)
     #model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
-    model=resnet18()
+    #model=resnet18()
     #model = RNN2(n_input=input_size,n_output=num_classes,n_hidden=20)
-    #train(model,200,0.001)
-    #train(model,300,0.001)
+    #train(model,200,0.0005)
+    #train(model,100,0.000125)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     print(model.eval())
-    train_from_load(model,"cnn.pth",15,0.0005)
+    train_from_load(model,"cnn.pth",50,0.0005)
     #train(model,100,0.001)

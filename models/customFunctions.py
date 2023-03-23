@@ -13,7 +13,9 @@ basicTransform = transforms.Compose(
      #extractOneChannel(),
     #transforms.RandomCrop((30,6)),
     #transforms.Resize((44,6)),
-     transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))]
+     #transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
+     transforms.Normalize((0.5), (0.5))
+     ]
 )
 # basic3ChannelTransform=transforms.Compose(
 #     [transforms.ToTensor(),
