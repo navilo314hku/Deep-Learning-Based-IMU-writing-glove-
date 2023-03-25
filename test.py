@@ -39,7 +39,10 @@ def predictSingleImage(image_path,model):
       class_name = index
       return class_name
 
-def report_accuracies(model,train_loader,test_loader, batch_size=batch_size,logFile=ACC_LOG_PATH):
+def report_accuracies(model,train_loader,test_loader, batch_size=batch_size,logFile=ACC_LOG_PATH,print_result=1):
+    '''
+    return train_acc, test_acc
+    '''
     def report(dataloader,mode,logFile=None):
         classes=[0,1,2,3,4,5,6,7,8,9]
         #classes=[0,1,2]
@@ -74,27 +77,31 @@ def report_accuracies(model,train_loader,test_loader, batch_size=batch_size,logF
                     n_class_samples[label] += 1
 
             acc = 100.0 * n_correct / n_samples
+            overall_acc=acc
             with open(logFile,'a') as f:
                 if mode=='test':
-                    print(f'Test Accuracy of the network: {acc} %')
+                    if print_result:
+                        print(f'Test Accuracy of the network: {acc} %')
                     f.writelines(f'Test Accuracy of the network: {acc} %\n')
                 elif mode=='train':
-                    print(f'Train Accuracy of the network: {acc} %')
+                    if print_result:
+                        print(f'Train Accuracy of the network: {acc} %')
                     f.writelines(f'Train Accuracy of the network: {acc} %\n')
                 else: 
 
                     raise Exception('Invalid mode')
                 for i in range(num_classes):
                     acc = 100.0 * n_class_correct[i] / n_class_samples[i]
-                    print(f'Accuracy of {classes[i]}: {acc} %')
+                    if print_result:
+                        print(f'Accuracy of {classes[i]}: {acc} %')
                     f.writelines(f'Accuracy of {classes[i]}: {acc} %\n')
-                    
+            return overall_acc 
 
     print("Test accuracy")
-    report(test_loader,'test',ACC_LOG_PATH)
+    test_acc=report(test_loader,'test',ACC_LOG_PATH)
     print("Train accuracy")
-    report(train_loader,'train',ACC_LOG_PATH)
-
+    train_acc=report(train_loader,'train',ACC_LOG_PATH)
+    return train_acc,test_acc
 if __name__=='__main__':
     #DO NOT DELETE 
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()

@@ -28,7 +28,7 @@ VARIED_LENGTH_TRAIN_PATH=os.path.join(VARIED_DATA_PATH,"train")
 VARIED_LENGTH_TEST_PATH=os.path.join(VARIED_DATA_PATH,"test")
 BACKUP_PATH=os.path.join("images","fixedLengthDataBackup")
 #Data storage var end
-batch_size=4
+batch_size=32
 class realTimePrediction:
     ROOT_PATH="realTimePrediction"
 class Models:

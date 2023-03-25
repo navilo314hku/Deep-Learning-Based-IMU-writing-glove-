@@ -75,6 +75,7 @@ def report_data():
                 print(f"{folder}: {num_of_files}")
 def getDatasetDataloader():
     print("preparing dataset...........................")
+    print(f"batch size={batch_size}")
     #get the conf json 
     JsonAc=ConfJsonDictAccesser()
     ModelDataType=JsonAc.get_model_data_type()
