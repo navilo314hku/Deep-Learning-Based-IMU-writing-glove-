@@ -1,4 +1,6 @@
 import torch
+torch.manual_seed(0)
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
@@ -22,12 +24,18 @@ from utils import *
 
 
 # Device configuration
-save=0
+save=1
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 import os
 import pandas as pd
 from torchvision.io import read_image
-
+def write_tensorboard_acc(writer,model,train_loader,test_loader,epoch,start_from_ep):        
+    train_acc,test_acc=report_accuracies(model,train_loader,test_loader,print_result=0)
+    train_acc/=100.0
+    test_acc/=100.0
+    print("writing tensorboard")
+    writer.add_scalar("training accuracy",train_acc,start_from_ep+epoch)
+    writer.add_scalar("testing accuracy",test_acc,start_from_ep+epoch)
 class CustomImageDataset(Dataset):
     def __init__(self, annotations_file, img_dir, transform=None, target_transform=None):
         self.img_labels = pd.read_csv(annotations_file)
@@ -53,7 +61,7 @@ class CustomImageDataset(Dataset):
             label = self.target_transform(label)
         return image, label
 
-def train(model,writer_name="",num_epochs=500,learning_rate=0.00001):
+def train(model,writer_name="",num_epochs=500,learning_rate=0.00001, tensor_board_log_step=5,start_from_ep=0):
 #    MODEL_CHECKPOINT
     writer=SummaryWriter(f"runs/{writer_name}")
     print(f"lr={learning_rate}")
@@ -75,17 +83,12 @@ def train(model,writer_name="",num_epochs=500,learning_rate=0.00001):
             running_loss=0.0
             running_correct=0
             for i, (images, labels) in enumerate(train_loader):#loop for one batch
-                #print(f"length of label={len(labels)}")
-                #print(len(labels))
-                # origin shape: [4, 3, 32, 32] = 4, 3, 1024
-                # input_layer: 3 input channels, 6 output channels, 5 kernel size
+            
                 images = images.to(device)
                 labels = labels.to(device)
-
                 # Forward pass
                 outputs = model(images)
                 loss = criterion(outputs, labels)
-
                 # Backward and optimize
                 optimizer.zero_grad()
                 loss.backward()
@@ -95,12 +98,13 @@ def train(model,writer_name="",num_epochs=500,learning_rate=0.00001):
                 running_correct+=(predicted==labels).sum().item()
                 
                 
-                if (i+1) % 200 == 0:# print loss
+                if (i+1) % 5 == 0:# print loss
                     print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
-            train_acc,test_acc=report_accuracies(model,train_loader,test_loader,print_result=0)
-            print("writing tensorboard")
-            writer.add_scalar("training accuracy",train_acc,epoch)
-            writer.add_scalar("testing accuracy",test_acc,epoch)
+            if (epoch+1)%tensor_board_log_step==0:
+                write_tensorboard_acc(writer,model,train_loader,test_loader,epoch,start_from_ep)       
+            if ((epoch+1)%50==0 and save):
+                print("saving model")
+                torch.save(model.state_dict(), './cnn.pth')
         print('Finished Training')
         f.write("Finished Training")
         training_name=model.model_name+"_"+get_datetime()
@@ -116,7 +120,7 @@ def train_from_load(model_object,modelPath,num_epochs,learning_rate):
     model.load_state_dict(torch.load(modelPath,map_location=torch.device(device)),strict=False)
     model.eval()
     train(model,num_epochs=num_epochs,learning_rate=learning_rate)
-
+    #train(model,writer_name="lr= "+str(lr),num_epochs=200,learning_rate=lr,tensor_board_log_step=10)
 def train_previous(model_object,num_epochs,learning_rate):
     model.load_state_dict(torch.load('./cnn.pth',map_location=torch.device(device)),strict=False)
     model.eval()
@@ -133,8 +137,6 @@ if __name__=='__main__':
     print(f"number of classes: {num_classes}")
     
     #model=ConvNetFlexible(output_size=num_classes)
-    model=OptimConvNet2(output_size=num_classes)
-    print(f"using model: {model.model_name}")
     #model=DNN()
     #model=RNN(input_size,hidden_size,num_layers,num_classes)
     #model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
@@ -143,9 +145,23 @@ if __name__=='__main__':
     #train(model,200,0.0005)
     #train(model,100,0.000125)
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
-    print(model.eval())
-    lrs=[0.001,0.0005,0.00025,0.000125]
+    #lrs=[0.002,]
+    #lrs=[0.001,0.0005,0.00025,0.000125]
+    #lrs=[0.0001]#,0.00001]
+    lrs=[0.00002]
+    #lrs=[0.00001]
     for lr in lrs:
-        train(model,writer_name=str(lr),num_epochs=4,learning_rate=lr)
+        model=OptimConvNet2(output_size=num_classes)
+        print(f"using model: {model.model_name}")
+
+        print(model.eval())
+        
+        
+        model.load_state_dict(torch.load('./cnn.pth',map_location=torch.device(device)),strict=False)
+        model.eval()
+        #train(model,num_epochs=200,learning_rate=learning_rate)
+
+        train(model,writer_name="lr= "+str(lr),num_epochs=300,learning_rate=lr,tensor_board_log_step=10,start_from_ep=1100)
+        model=None
         #train_from_load(model,"cnn.pth",50,0.0005)
     #train(model,100,0.001)

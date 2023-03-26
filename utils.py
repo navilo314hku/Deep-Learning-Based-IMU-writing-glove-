@@ -73,7 +73,7 @@ def report_data():
                 folder_dir=os.path.join(path,folder)
                 num_of_files=len(os.listdir(folder_dir))
                 print(f"{folder}: {num_of_files}")
-def getDatasetDataloader():
+def getDatasetDataloader(train_size=3000):
     print("preparing dataset...........................")
     print(f"batch size={batch_size}")
     #get the conf json 
@@ -86,7 +86,9 @@ def getDatasetDataloader():
         train_dataset=torchvision.datasets.ImageFolder(VARIED_LENGTH_TRAIN_PATH,transform=basicTransform,loader=custom_pil_loader)
         test_dataset= torchvision.datasets.ImageFolder(VARIED_LENGTH_TEST_PATH,transform=basicTransform,loader=custom_pil_loader)
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
+    #train_loader = train_loader[:train_size]
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=True, drop_last=True)
+
     print("dataset information: ")
     print(f"batch_size={batch_size}")
     print(f"train_dataset shape: {train_dataset[0][0].shape}")

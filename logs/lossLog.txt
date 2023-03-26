@@ -426,4 +426,152 @@ Finished Trainingtraining time:
 20230325_233501
 Finished Trainingtraining time:
 20230325_233515
+Finished Trainingtraining time:
+20230325_234729
+training time:
+20230325_234846
+training time:
+20230325_235332
+training time:
+20230325_235432
+training time:
+20230325_235458
+Finished Trainingtraining time:
+20230325_235513
+Finished Trainingtraining time:
+20230325_235807
+Finished Trainingtraining time:
+20230326_000347
+Finished Trainingtraining time:
+20230326_000925
+Finished Trainingtraining time:
+20230326_001441
+training time:
+20230326_001949
+Finished Trainingtraining time:
+20230326_002700
+Finished Trainingtraining time:
+20230326_003313
+Finished Trainingtraining time:
+20230326_003915
+Finished Trainingtraining time:
+20230326_004533
+training time:
+20230326_004754
+training time:
+20230326_004944
+Finished Trainingtraining time:
+20230326_005027
+Finished Trainingtraining time:
+20230326_005222
+training time:
+20230326_005243
+Finished Trainingtraining time:
+20230326_005305
+Finished Trainingtraining time:
+20230326_005345
+Finished Trainingtraining time:
+20230326_005425
+Finished Trainingtraining time:
+20230326_005630
+Finished Trainingtraining time:
+20230326_005726
+Finished Trainingtraining time:
+20230326_005844
+training time:
+20230326_005909
+Finished Trainingtraining time:
+20230326_010042
+Finished Trainingtraining time:
+20230326_010420
+Finished Trainingtraining time:
+20230326_011058
+Finished Trainingtraining time:
+20230326_011720
+Finished Trainingtraining time:
+20230326_012349
+Finished Trainingtraining time:
+20230326_095351
+Finished Trainingtraining time:
+20230326_100745
+Finished Trainingtraining time:
+20230326_102058
+Finished Trainingtraining time:
+20230326_115538
+training time:
+20230326_115848
+Finished Trainingtraining time:
+20230326_115927
+Finished Trainingtraining time:
+20230326_120002
+Finished Trainingtraining time:
+20230326_120034
+Finished Trainingtraining time:
+20230326_120108
+Finished Trainingtraining time:
+20230326_120552
+training time:
+20230326_120749
+Finished Trainingtraining time:
+20230326_120843
+Finished Trainingtraining time:
+20230326_120930
+Finished Trainingtraining time:
+20230326_121014
+Finished Trainingtraining time:
+20230326_180223
+Finished Trainingtraining time:
+20230326_180457
+Finished Trainingtraining time:
+20230326_180725
+Finished Trainingtraining time:
+20230326_180957
+Finished Trainingtraining time:
+20230326_185429
+training time:
+20230326_185650
+training time:
+20230326_185814
+training time:
+20230326_190031
+training time:
+20230326_190237
+training time:
+20230326_190528
+training time:
+20230326_190546
+Finished Trainingtraining time:
+20230326_190859
+Finished Trainingtraining time:
+20230326_191218
+Finished Trainingtraining time:
+20230326_191528
+Finished Trainingtraining time:
+20230326_194138
+training time:
+20230326_194155
+training time:
+20230326_194829
+training time:
+20230326_194922
+Finished Trainingtraining time:
+20230326_200308
+training time:
+20230326_200454
+Finished Trainingtraining time:
+20230326_211434
+Finished Trainingtraining time:
+20230326_214623
+Finished Trainingtraining time:
+20230326_220155
+Finished Trainingtraining time:
+20230326_221804
+Finished Trainingtraining time:
+20230326_224551
+training time:
+20230326_224620
+training time:
+20230326_230758
+training time:
+20230326_234230
 Finished Training
