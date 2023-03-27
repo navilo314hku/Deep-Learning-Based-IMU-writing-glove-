@@ -42,7 +42,7 @@ class DNN(nn.Module):
         self.fc0 = nn.Linear(22*6,560)
         self.fc1 = nn.Linear(560,256)
         self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 3)
+        self.fc3 = nn.Linear(128, 10)
 
     def forward(self, x):
         #print(x.shape)

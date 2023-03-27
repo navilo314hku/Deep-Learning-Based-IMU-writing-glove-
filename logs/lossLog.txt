@@ -574,4 +574,24 @@ training time:
 20230326_230758
 training time:
 20230326_234230
+Finished Trainingtraining time:
+20230327_202432
+Finished Trainingtraining time:
+20230327_202739
+Finished Trainingtraining time:
+20230327_203050
+Finished Trainingtraining time:
+20230327_203305
+Finished Trainingtraining time:
+20230327_232852
+Finished Trainingtraining time:
+20230328_003531
+Finished Trainingtraining time:
+20230328_003729
+Finished Trainingtraining time:
+20230328_004023
+Finished Trainingtraining time:
+20230328_004314
+Finished Trainingtraining time:
+20230328_004603
 Finished Training

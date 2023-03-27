@@ -63,7 +63,8 @@ class CustomImageDataset(Dataset):
 
 def train(model,writer_name="",num_epochs=500,learning_rate=0.00001, tensor_board_log_step=5,start_from_ep=0):
 #    MODEL_CHECKPOINT
-    writer=SummaryWriter(f"runs/{writer_name}")
+    log_path=os.path.join("tf_board","RNN_part_runs")
+    writer=SummaryWriter(f"{log_path}/{writer_name}")
     print(f"lr={learning_rate}")
     print(f"batch size={batch_size}")
     loss_arr=[]
@@ -128,9 +129,9 @@ def train_previous(model_object,num_epochs,learning_rate):
 
 if __name__=='__main__':
     print(device)
-    # input_size = 6
-    # hidden_size = 256
-    # num_layers = 2
+    input_size = 6
+    hidden_size = 256
+    num_layers = 2
     #sequence_length = 44
     train_dataset,test_dataset,train_loader,test_loader=getDatasetDataloader()
     num_classes = len(train_dataset.classes)
@@ -138,7 +139,6 @@ if __name__=='__main__':
     
     #model=ConvNetFlexible(output_size=num_classes)
     #model=DNN()
-    #model=RNN(input_size,hidden_size,num_layers,num_classes)
     #model = RNN_LSTM(input_size, hidden_size, num_layers, num_classes).to(device)
     #model=resnet18()
     #model = RNN2(n_input=input_size,n_output=num_classes,n_hidden=20)
@@ -147,21 +147,22 @@ if __name__=='__main__':
     #MODEL_PATH=os.path.join("checkpoint","ConvNetFlex_ep90.pth")
     #lrs=[0.002,]
     #lrs=[0.001,0.0005,0.00025,0.000125]
-    #lrs=[0.0001]#,0.00001]
-    lrs=[0.00002]
-    #lrs=[0.00001]
+    lrs=[1e-03,1e-04,5e-05,1e-06]#,0.00001]
+    #lrs=[0.00002]
+    #lrs=[0.00005]
     for lr in lrs:
-        model=OptimConvNet2(output_size=num_classes)
+        #model=OptimConvNet2(output_size=num_classes)
+        model=RNN(input_size,hidden_size,num_layers,num_classes)
         print(f"using model: {model.model_name}")
 
         print(model.eval())
         
         
-        model.load_state_dict(torch.load('./cnn.pth',map_location=torch.device(device)),strict=False)
-        model.eval()
+        #model.load_state_dict(torch.load('./cnn.pth',map_location=torch.device(device)),strict=False)
+        #model.eval()
         #train(model,num_epochs=200,learning_rate=learning_rate)
 
-        train(model,writer_name="lr= "+str(lr),num_epochs=300,learning_rate=lr,tensor_board_log_step=10,start_from_ep=1100)
+        train(model,writer_name="lr= "+str(lr),num_epochs=25,learning_rate=lr,tensor_board_log_step=5,start_from_ep=0)
         model=None
         #train_from_load(model,"cnn.pth",50,0.0005)
     #train(model,100,0.001)
